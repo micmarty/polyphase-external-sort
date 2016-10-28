@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <iostream>
+#include <stdlib.h>
 #include "Cone.h"
 #include "Tape.h"
 
@@ -22,15 +23,16 @@ public:
 
     }
     void generate(unsigned int amount){
+        //DEBUG
         float tab[] = {10, 8, 2, 1, 2, 2, 7, 9, 8, 8, 5, 8, 9, 4, 7, 1, 6, 1, 6, 6, 8, 5, 2, 4, 10, 2, 3, 6, 1, 3, 1};
         std::vector<Cone> cones;
 
         std::cout<< "wektor wygenerowany:"<<std::endl;
         for (int i = 0; i < amount; i++) {
-            float radius = tab[i];//(std::rand() % 10 + 1);
-            //float height = (float) (std::rand() % 10 + 1);
+            float radius = tab[i];//(std::rand() % 10 + 1);//DEBUG
+            float height = (float) (std::rand() % 10 + 1);
 
-            cones.push_back(Cone(radius, radius));
+            cones.push_back(Cone(radius, radius));//DEBUG
             std::cout << cones[i].getVolume() << "\t";
 
             if(cones.size() == bufferLimit){

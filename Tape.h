@@ -13,26 +13,37 @@
 class Tape {
 
 private:
+    unsigned int bufferSize;
     std::string path;
     std::string name;
     std::vector<Cone> buffer;
     std::fstream stream;
+
+
 public:
+    std::vector<Cone>& getBuffer(){
+        return buffer;
+    }
+    std::fstream& getStream(){
+        return stream;
+    }
+
+    void insert_element_into_tape_buffer(){
+
+    }
 
 
-    Tape(const std::string& path_,const std::string& name_) : stream(path_,std::ios::out | std::ios::binary),buffer(3){
+    Tape(const std::string& path_,const std::string& name_,unsigned int bufferSize) : stream(path_,std::ios::out | std::ios::binary),buffer(3){
         //open for writing
         name = name_;
         path = path_;
     }
 
-    Tape(const std::string& path_,const std::string& name_, bool readMode) : stream(path_,std::ios::in | std::ios::binary),buffer(3){
+    Tape(const std::string& path_,const std::string& name_,unsigned int bufferSize, bool readMode) : stream(path_,std::ios::in | std::ios::binary),buffer(3){
         //open for reading
         name = name_;
         path = path_;
     }
-
-
 
     //  put given vector onto the tape
     void persist_vector(std::vector<Cone>& v){

@@ -22,7 +22,8 @@ int main() {
     delete inputTape;
 
     // 1. phase
-    Distributor distributor = Distributor(tape_INPUT_path.c_str(),tape_A_path.c_str(),tape_B_path.c_str());
+    unsigned int bufferSize = 3;
+    Distributor distributor = Distributor(bufferSize,tape_INPUT_path.c_str(),tape_A_path.c_str(),tape_B_path.c_str());
     //distributor.distribute();
     return 0;
 }
