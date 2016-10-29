@@ -8,6 +8,8 @@
 
 #include <climits>
 #include "Tape.h"
+#include "FibonacciGenerator.h"
+
 #define A true
 #define B false
 
@@ -24,6 +26,8 @@ class Distributor {
     unsigned int seriesOnB;
     bool elementInserted;
 
+    FibonacciGenerator fibonacciGenerator;
+
 
 public:
     Distributor(unsigned int bufferSize_,
@@ -32,45 +36,98 @@ public:
                 const std::string& bPath):
             inputTape(inputPath,"INPUT",bufferSize_,true),
             aTape(aPath, "A",bufferSize_),
-            bTape(bPath, "B",bufferSize_)
+            bTape(bPath, "B",bufferSize_),
+            readBuffer(bufferSize_)
     {
         seriesOnA = 0;
         seriesOnB = 0;
         currentTape = &aTape;
         bufferSize = bufferSize_;
-        readBuffer.reserve(bufferSize);
+
+        fibonacciGenerator = FibonacciGenerator();
+    }
+
+    void count_new_series() {
+        int series;
+        if (currentTape == &aTape) {
+            series = ++seriesOnA;
+        } else if (currentTape == &bTape) {
+            series = ++seriesOnB;
+        }
+        std::cout << "*  zliczono "
+                  << series << "/" << fibonacciGenerator.limit()
+                  << " serii na " << currentTape->getName()
+                  << ", ostatni = " << currentTape->last_from_buffer().getVolume()
+                  << std::endl;
+
+    }
+
+    bool fib_limit_reached() {
+        unsigned int series, limit;
+        if (currentTape == &aTape) {
+            series = seriesOnA;
+        } else if (currentTape == &bTape) {
+            series = seriesOnB;
+        }
+        limit = fibonacciGenerator.limit();
+
+        if (series < limit)
+            return false;
+        else {
+            std::cout << "osiagnieto max serii=" << limit << std::endl;
+            return true;
+        }
+    }
+
+    void switch_current_tape() {
+        currentTape = (currentTape == &aTape) ? &bTape : &aTape;
+    }
+
+    void decrease_series_counter() {
+        unsigned int series;
+        if (currentTape == &aTape) {
+            series = --seriesOnA;
+        } else if (currentTape == &bTape) {
+            series = --seriesOnB;
+        }
+        std::cout << "kontynuacja na tasmie A nadal jest "
+                  << series << " serii" << std::endl;
     }
 
     void distribute(){
         Cone last = Cone(INT_MIN, INT_MIN);
 
+        //inputTape.getStream().close();
+        //inputTape.getStream().open(inputTape.getPath().c_str(), std::ios::in | std::ios::binary);
+
         while(inputTape.getStream().read(reinterpret_cast<char *>(readBuffer.data()), sizeof(Cone) * bufferSize)){
             for(unsigned int readBufferIndex = 0; readBufferIndex<bufferSize;readBufferIndex++){
                 do{
-                    last = last_from_current_buffer();
+                    last = currentTape->last_from_buffer();
 
                     //  next element in the series(we are prolonging series length)
                     if(last <= readBuffer.at(readBufferIndex)){
-                        currentTape->insert_element_into_tape_buffer();
+                        currentTape->insert_element_into_tape_buffer(readBuffer.at(readBufferIndex));
                         elementInserted = true;
                     }else{
                         //  we can't put element in ascending order anymore
                         count_new_series();
 
-                        //  we cannot put more new series on current tape
-                        if(!fib_limit_reached()){
+                        //  there is a possibility to create a new series on current tape, up to fib limit
+                        if(fib_limit_reached()){
                             switch_current_tape();
                             fibonacciGenerator.next();
 
                             //  maybe we can continue series that we found on freshly switched tape
-                            if(last_from_current_buffer() <= readBuffer.at(readBufferIndex) && !bTape.getBuffer().empty()){
+                            if(currentTape->last_from_buffer() <= readBuffer.at(readBufferIndex) && !bTape.getBuffer().empty()){
                                 //  continue previous series
+                                decrease_series_counter();
                             }
 
                             currentTape->insert_element_into_tape_buffer(readBuffer.at(readBufferIndex));
                             elementInserted= true;
                         }else{
-                            //  there is a possibility to create a new series on current tape, up to fib limit
+                            //  we cannot put more new series on current tape
                             currentTape->insert_element_into_tape_buffer(readBuffer.at(readBufferIndex));
                             elementInserted = true;
                         }

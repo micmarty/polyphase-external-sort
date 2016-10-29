@@ -7,7 +7,6 @@
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Tape.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ConeGenerator.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/CONSTANTS.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Distributor.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Cone.h" isTestSource="false" />
     </content>

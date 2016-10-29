@@ -14,13 +14,18 @@
 
 class ConeGenerator {
     int bufferLimit;
-    Tape tapeToFill;
+    Tape* tapeToFill;
 public:
-    ConeGenerator(const std::string & path): tapeToFill(path, "INPUT"){
+    ConeGenerator(const std::string & path){
+        tapeToFill = new Tape(path, "INPUT", 1);
         bufferLimit = 31;
     }
-    ~ConeGenerator(){
 
+    ConeGenerator(ConeGenerator&);
+    void operator= (ConeGenerator&);
+
+    ~ConeGenerator(){
+        delete tapeToFill;
     }
     void generate(unsigned int amount){
         //DEBUG
@@ -36,7 +41,7 @@ public:
             std::cout << cones[i].getVolume() << "\t";
 
             if(cones.size() == bufferLimit){
-                tapeToFill.persist_vector(cones);
+                tapeToFill->persist_vector(cones);
                 cones.clear();
             }
 
