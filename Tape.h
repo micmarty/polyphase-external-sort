@@ -117,6 +117,15 @@ public:
     }
 
 
+    size_t file_size() {
+        long begin = stream.tellg();    //  measure byte we are at
+        stream.seekg (0, std::ios::end);//  go to the end
+        long end = stream.tellg();      //  measure byte we are at
+        stream.clear();                 //  clear bad and fail flag
+        stream.seekg(0, std::ios::beg); //  reset position to the beginning
+
+        return end - begin;             //  return file size in bytes
+    }
 };
 
 

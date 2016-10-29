@@ -116,21 +116,18 @@ public:
 
 
     void distribute(){
-
-
-        long begin = inputTape.getStream().tellg();
-        inputTape.getStream().seekg (0, std::ios::end);
-        long end = inputTape.getStream().tellg();
-        inputTape.getStream().clear();
-        inputTape.getStream().seekg(0, std::ios::beg);
-
-        unsigned int recordsInFile = (end-begin)/sizeof(Cone);// size in records
+        unsigned int fileSize = inputTape.file_size();
+        std::cout<< "taśma INPUT zawiera " << fileSize << " bajtów"<<std::endl;
+        unsigned int recordsInFile = fileSize/sizeof(Cone);// size in records
         unsigned int wholeBuffersNumber = recordsInFile / bufferSize;
         int recordsInLastBuffer = recordsInFile - wholeBuffersNumber * bufferSize;
 
+
+
         unsigned int buffersAlreadyRead = 0;
         while(buffersAlreadyRead < wholeBuffersNumber){
-            LAST_READ:
+            LAST_READ:  //  label used only once in last run(smaller chunk at the end of the input file)
+
             inputTape.getStream().read(reinterpret_cast<char *>(readBuffer.data()), sizeof(Cone) * bufferSize);
             for(unsigned int readBufferIndex = 0; readBufferIndex<bufferSize;readBufferIndex++){
                 do{

@@ -12,6 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83f63231-5868-40a6-8756-ade6f587f3b8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConeGenerator.h" afterPath="$PROJECT_DIR$/ConeGenerator.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Distributor.h" afterPath="$PROJECT_DIR$/Distributor.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tape.h" afterPath="$PROJECT_DIR$/Tape.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
@@ -37,8 +39,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+            <state relative-caret-position="396">
+              <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -49,8 +51,8 @@
       <file leaf-file-name="Distributor.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Distributor.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="136" column="25" selection-start-line="136" selection-start-column="25" selection-end-line="136" selection-end-column="25" />
+            <state relative-caret-position="439">
+              <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
               <folding>
                 <element signature="e#134#152#0" expanded="true" />
                 <element signature="e#1093#1538#0" expanded="false" />
@@ -65,8 +67,8 @@
       <file leaf-file-name="ConeGenerator.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="35" column="42" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
+            <state relative-caret-position="370">
+              <caret line="31" column="10" selection-start-line="31" selection-start-column="10" selection-end-line="31" selection-end-column="10" />
               <folding>
                 <element signature="e#138#155#0" expanded="true" />
               </folding>
@@ -77,8 +79,8 @@
       <file leaf-file-name="Tape.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tape.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="77" column="26" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
+            <state relative-caret-position="610">
+              <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
               <folding>
                 <element signature="e#119#136#0" expanded="true" />
                 <element signature="e#1267#1419#0" expanded="false" />
@@ -99,8 +101,8 @@
         <option value="$PROJECT_DIR$/FibonacciGenerator.h" />
         <option value="$PROJECT_DIR$/Cone.h" />
         <option value="$PROJECT_DIR$/CONSTANTS.h" />
-        <option value="$PROJECT_DIR$/ConeGenerator.h" />
         <option value="$PROJECT_DIR$/Tape.h" />
+        <option value="$PROJECT_DIR$/ConeGenerator.h" />
         <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/Distributor.h" />
       </list>
@@ -315,12 +317,12 @@
       <workItem from="1477659342327" duration="5670000" />
       <workItem from="1477669519010" duration="15491000" />
       <workItem from="1477733787949" duration="2922000" />
-      <workItem from="1477744337772" duration="9959000" />
+      <workItem from="1477744337772" duration="10801000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34042000" />
+    <option name="totallyTimeSpent" value="34884000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="27" width="1859" height="1053" extended-state="6" />
@@ -332,7 +334,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.401291" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3625605" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -382,7 +384,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Distributor.h</url>
-          <line>171</line>
+          <line>168</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
@@ -557,6 +559,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -580,6 +583,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -633,8 +637,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="35" column="42" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
+        <state relative-caret-position="370">
+          <caret line="31" column="10" selection-start-line="31" selection-start-column="10" selection-end-line="31" selection-end-column="10" />
           <folding>
             <element signature="e#138#155#0" expanded="true" />
           </folding>
@@ -643,8 +647,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Tape.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="77" column="26" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
+        <state relative-caret-position="610">
+          <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
             <element signature="e#1267#1419#0" expanded="false" />
@@ -655,8 +659,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+        <state relative-caret-position="396">
+          <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -665,8 +669,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Distributor.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="136" column="25" selection-start-line="136" selection-start-column="25" selection-end-line="136" selection-end-column="25" />
+        <state relative-caret-position="439">
+          <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
           <folding>
             <element signature="e#134#152#0" expanded="true" />
             <element signature="e#1093#1538#0" expanded="false" />
