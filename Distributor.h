@@ -47,6 +47,25 @@ public:
         fibonacciGenerator = FibonacciGenerator();
     }
 
+    ~Distributor(){
+
+    }
+
+    //  count new series on SPECIFIC tape
+    void count_new_series(Tape* tape) {
+        int series;
+        if (tape == &aTape) {
+            series = ++seriesOnA;
+        } else if (tape == &bTape) {
+            series = ++seriesOnB;
+        }
+        std::cout << "*  zliczono "
+                  << series << "/" << fibonacciGenerator.limit()
+                  << " serii na " << tape->getName()
+                  << std::endl<<std::endl;
+    }
+
+    //  count new series on CURRENT tape
     void count_new_series() {
         int series;
         if (currentTape == &aTape) {
@@ -90,20 +109,32 @@ public:
         } else if (currentTape == &bTape) {
             series = --seriesOnB;
         }
-        std::cout << "kontynuacja na tasmie A nadal jest "
+        std::cout << "kontynuacja na tasmie " << currentTape->getName()<<" nadal jest "
                   << series << " serii" << std::endl;
     }
 
+
+
     void distribute(){
-        Cone last = Cone(INT_MIN, INT_MIN);
 
-        //inputTape.getStream().close();
-        //inputTape.getStream().open(inputTape.getPath().c_str(), std::ios::in | std::ios::binary);
 
-        while(inputTape.getStream().read(reinterpret_cast<char *>(readBuffer.data()), sizeof(Cone) * bufferSize)){
+        long begin = inputTape.getStream().tellg();
+        inputTape.getStream().seekg (0, std::ios::end);
+        long end = inputTape.getStream().tellg();
+        inputTape.getStream().clear();
+        inputTape.getStream().seekg(0, std::ios::beg);
+
+        unsigned int recordsInFile = (end-begin)/sizeof(Cone);// size in records
+        unsigned int wholeBuffersNumber = recordsInFile / bufferSize;
+        int recordsInLastBuffer = recordsInFile - wholeBuffersNumber * bufferSize;
+
+        unsigned int buffersAlreadyRead = 0;
+        while(buffersAlreadyRead < wholeBuffersNumber){
+            LAST_READ:
+            inputTape.getStream().read(reinterpret_cast<char *>(readBuffer.data()), sizeof(Cone) * bufferSize);
             for(unsigned int readBufferIndex = 0; readBufferIndex<bufferSize;readBufferIndex++){
                 do{
-                    last = currentTape->last_from_buffer();
+                    Cone last = currentTape->last_from_buffer();
 
                     //  next element in the series(we are prolonging series length)
                     if(last <= readBuffer.at(readBufferIndex)){
@@ -134,7 +165,20 @@ public:
                     }
                 }while(!elementInserted);
             }
+            buffersAlreadyRead++;
         }
+
+        //  process last, a non-fully filled buffer
+        if(recordsInLastBuffer>0){
+            bufferSize = recordsInLastBuffer;   //  set the new chunk size for reading
+            recordsInLastBuffer=-1;             //  just as a flag
+            goto LAST_READ;
+        }
+
+        //  write records that are still in buffer
+        aTape.flush_buffer_to_tape();
+        bTape.flush_buffer_to_tape();
+
     }
 
 };

@@ -26,5 +26,14 @@ int main() {
     Distributor* distributor = new Distributor(bufferSize,tape_INPUT_path.c_str(),tape_A_path.c_str(),tape_B_path.c_str());
     distributor->distribute();
     delete(distributor);
+
+    //  test A tape
+    Tape* tape = new Tape(tape_A_path.c_str(),"A", 1,true);
+    tape->display_tape();
+    tape = new Tape(tape_B_path.c_str(),"B", 1,true);
+    tape->display_tape();
+    delete tape;
+
+
     return 0;
 }
