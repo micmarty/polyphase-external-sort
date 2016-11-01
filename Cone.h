@@ -26,19 +26,27 @@ public:
     }
 
     //  operators overloading for comparisons
-    bool operator> (const Cone &right)
+    bool operator> (const Cone &right)const
     {
         return (radius > right.radius);
     }
-    bool operator< (const Cone &right)
+    bool operator< (const Cone &right)const
     {
         return (radius < right.radius);
     }
-    bool operator>= (const Cone &right)
+    bool operator>= (const Cone &right) const
     {
         return (radius >= right.radius);
     }
-    bool operator<= (const Cone &right)
+
+    bool operator== (const Cone &right) const
+    {
+        return (radius == right.radius);
+    }
+
+
+
+    bool operator<= (const Cone &right)const
     {
         return (radius <= right.radius);
     }

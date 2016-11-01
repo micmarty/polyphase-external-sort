@@ -116,6 +116,8 @@ public:
 
 
     void distribute(){
+        // initially: show file size, count how many whole buffers we need to read
+        // and how big is the last one(not fully filled)
         unsigned int fileSize = inputTape.file_size();
         std::cout<< "taśma INPUT zawiera " << fileSize << " bajtów"<<std::endl;
         unsigned int recordsInFile = fileSize/sizeof(Cone);// size in records
@@ -123,7 +125,7 @@ public:
         int recordsInLastBuffer = recordsInFile - wholeBuffersNumber * bufferSize;
 
 
-
+        // begin the proper action
         unsigned int buffersAlreadyRead = 0;
         while(buffersAlreadyRead < wholeBuffersNumber){
             LAST_READ:  //  label used only once in last run(smaller chunk at the end of the input file)
@@ -165,17 +167,21 @@ public:
             buffersAlreadyRead++;
         }
 
+
         //  process last, a non-fully filled buffer
         if(recordsInLastBuffer>0){
             bufferSize = recordsInLastBuffer;   //  set the new chunk size for reading
             recordsInLastBuffer=-1;             //  just as a flag
             goto LAST_READ;
         }
+        count_new_series(&aTape);   //  we had to stop at some point, so no matter what, we need to count it as a series
+                                    //                 . . . 1 3 | 1 |
+                                    //                               ^
+                                    //  that's what we need to count
 
         //  write records that are still in buffer
         aTape.flush_buffer_to_tape();
         bTape.flush_buffer_to_tape();
-
     }
 
 };
