@@ -12,9 +12,6 @@
 #include "Cone.h"
 #include "Tape.h"
 
-#define OTRZYMANO_PELNY_BUFOR 0
-#define OTRZYMANO_POMNIEJSZONY_BUFOR 1
-
 #define JEST_W_BUFORZE 0
 #define TRZEBA_ZALADOWAC_BUFOR 1
 #define KONIEC_TASMY -1
@@ -31,7 +28,7 @@ class MergingHandler {
     int* currentIndex;
 
 public:
-    MergingHandler(unsigned int bufferSize_,
+    MergingHandler(int bufferSize_,
                    const std::string& destinationPath,
                    const std::string& firstPath,
                    const std::string& secondPath):
@@ -50,28 +47,6 @@ public:
 
     }
 
-    std::vector<unsigned int> pushSeriesToDestinationBuffer(){
-        unsigned int breakIndexOnA = 0, breakIndexOnB = 0;
-        std::vector<Tape*>tapes{&firstTape,&secondTape};
-
-        for(Tape* currentTape: tapes){
-            Cone last = currentTape->getBuffer().front();
-            destinationTape.getBuffer().push_back(last);
-
-            for(unsigned int tapeBufferIndex=1; tapeBufferIndex< currentTape->getBuffer().size(); tapeBufferIndex++){
-                Cone currentElement = currentTape->getBuffer().at(tapeBufferIndex);
-                if(last <= currentElement){
-                    destinationTape.getBuffer().push_back(currentElement);
-                }else
-                {
-                    currentTape==&firstTape ? breakIndexOnA=tapeBufferIndex:breakIndexOnB=tapeBufferIndex;
-                    break;
-                }
-            }
-        }
-        return std::vector<unsigned int>{breakIndexOnA,breakIndexOnB};
-    }
-
     Tape* other_tape(){
         if(currentTape == &firstTape){
             return &secondTape;
@@ -86,38 +61,6 @@ public:
         else if(currentIndex == &indexSecond)
             return &indexFirst;
     }
-
-
-    bool incrementCurrentIndex() {
-        (*currentIndex)++;  // increase now
-
-        bool endOfTapeFound = false;
-        //check if we are out of buffer bounds!
-        if(*currentIndex == currentTape->getBuffer().size()){
-            //reset index to the beginning
-            *currentIndex = 0;
-
-            size_t bytes_left = currentTape->file_size();
-            if(bytes_left/sizeof(Cone) >= currentTape->bufferSize){
-                //fill buffer with new data
-                currentTape->getStream().read(reinterpret_cast<char *>(currentTape->getBuffer().data()), sizeof(Cone) * currentTape->getBuffer().size());
-                currentTape->display_buffer_content();
-            }else{
-                currentTape->bufferSize = bytes_left/sizeof(Cone);
-                currentTape->getBuffer().resize(bytes_left/sizeof(Cone));
-
-                currentTape->getStream().read(reinterpret_cast<char *>(currentTape->getBuffer().data()), sizeof(Cone) * currentTape->getBuffer().size());
-
-                endOfTapeFound = true;
-                std::cout<<"tasma "<<currentTape->getName()<<" oddala ostatni bufor o wielkosci "<<bytes_left/sizeof(Cone)<<" elementow"<<std::endl;
-            }
-            firstTape.display_buffer_content();
-            secondTape.display_buffer_content();
-        }
-
-        return endOfTapeFound;
-    }
-
 
     void zaladuj_kolejny_bufor() {
         size_t bajtowDoKonca = currentTape->file_size_and_save_position();
@@ -137,25 +80,6 @@ public:
             currentTape->getStream().read(reinterpret_cast<char *>(currentTape->getBuffer().data()), sizeof(Cone) * currentTape->getBuffer().size());
         }
 
-    }
-
-    int zaladuj_kolejny_bufor_z_other() {
-        size_t bajtowDoKonca = other_tape()->file_size_and_save_position();
-        int rekordowDoKonca = bajtowDoKonca/sizeof(Cone);
-        *other_index() = 0;
-
-        //  zaladuj pelny bufor
-        if(rekordowDoKonca >= other_tape()->bufferSize){
-            other_tape()->getStream().read(reinterpret_cast<char *>(other_tape()->getBuffer().data()), sizeof(Cone) * other_tape()->getBuffer().size());
-        }
-        //  zaladuj pomniejszony bufor
-        else if(rekordowDoKonca < other_tape()->bufferSize){
-            //  zaktualizuj rozmiary bufora
-            other_tape()->bufferSize = rekordowDoKonca;
-            other_tape()->getBuffer().resize(rekordowDoKonca);
-
-            other_tape()->getStream().read(reinterpret_cast<char *>( other_tape()->getBuffer().data()), sizeof(Cone) *  other_tape()->getBuffer().size());
-        }
     }
 
     bool istnieje_bufor_do_zaladowania() {
@@ -213,26 +137,6 @@ public:
             }else{                                                          std::cout<<"Przekroczymy tasme, bo nie ma dalej żadnej serii."<<std::endl;
                 return KONIEC_TASMY;
             }
-        }
-    }
-
-    bool sasiad_na_other_nie_przekroczy_tasmy() {
-        int neigh_index = *other_index() + 1;
-
-        //  sasiad lezy jeszcze w obrebie obecnego bufora
-        if(neigh_index < other_tape()->getBuffer().size()){
-            return true;
-        }
-            //  sasiad lezy poza buforem, trzeba zaladowac nowy bufor(pelny, lub pomniejszony - ostatni)
-        else{
-            int statusTasmy = zaladuj_kolejny_bufor_z_other();
-            *other_index() = 0;//wyzeruj index na poczatek bufora
-            std::cout<<"zaladowalem bufor ";currentTape->display_buffer_content();std::cout<<std::endl;
-
-            if(statusTasmy == OTRZYMANO_PELNY_BUFOR || statusTasmy == OTRZYMANO_POMNIEJSZONY_BUFOR)
-                return true;
-            else if(statusTasmy == KONIEC_TASMY)
-                return false;   // czyli sasiad nie istnieje, bo current jest juz ostatnim na calej tasmie
         }
     }
 

@@ -4,6 +4,75 @@
 #include "ConeGenerator.h"
 #include "MergingHandler.h"
 
+#define LOAD_DATA_FROM_KEYBOARD_INPUT -1
+#define LOAD_FROM_FILE 0
+#define GENERATE_DATA 1
+
+int choosen_data_source() {
+    std::cout<<"Good morning, sir\n";
+    std::cout<<"Choose your input data source: \n\t<k> for keyboard \n\t<f> for file \n\t<g> for auto-generated data\n";
+
+    std::string userDecision;
+    std::cin >> userDecision;
+
+    if(userDecision == "k")
+        return LOAD_DATA_FROM_KEYBOARD_INPUT;
+    else if(userDecision == "f")
+        return LOAD_FROM_FILE;
+    else if(userDecision == "g"){
+        return GENERATE_DATA;
+    }
+}
+
+void populate_input_tape(std::string path) {
+    ConeGenerator* generator = new ConeGenerator(path.c_str());
+    int wayToPopulateInputTame = choosen_data_source();
+
+    if(wayToPopulateInputTame == LOAD_DATA_FROM_KEYBOARD_INPUT){
+        std::cout<<"Now you need, to give me records separated by spaces\nIn order to end the sequence give me -1 in input\n";
+
+        //TODO load radius and height! so two arrays!
+        std::vector<float> radiusVector;
+        float radius;
+        while ((std::cin >> radius) && radius != -1)
+            radiusVector.push_back(radius);
+
+        generator->import_from_vector(radiusVector, radiusVector, radiusVector.size()); //TODO replace second argument with heights
+    }else if(wayToPopulateInputTame == LOAD_FROM_FILE){
+        std::ifstream inputData("/home/miczi/ClionProjects/polyphase-external-sort/input.txt");
+        if (inputData) {
+            std::vector<float> radiusVector;
+            float radius;
+
+            // read the elements in the file into a vector
+            while ( inputData >> radius ) {
+                radiusVector.push_back(radius);
+            }
+            generator->import_from_vector(radiusVector, radiusVector, radiusVector.size()); //TODO replace second argument with heights
+        }
+    }else if(wayToPopulateInputTame == GENERATE_DATA){
+        std::cout<<"Now you need, to specify how many of records would you want to generate: ";
+        int recordsToGenerate;
+        std::cin >> recordsToGenerate;
+        generator->generate(recordsToGenerate);
+    }
+
+    delete generator;
+}
+
+void display_generated_input_tape(std::string path) {
+    Tape* inputTape = new Tape(path.c_str(),"INPUT", 1, true);
+    inputTape->display_tape();
+    delete inputTape;
+}
+
+void run_distribution(int bufferSize,std::string pathToINPUT, std::string pathToA, std::string pathToB) {
+    std::cout<<"\n\n\n--- DISTRIBUTION PHASE ----\n";
+
+    Distributor* distributor = new Distributor(bufferSize,pathToINPUT.c_str(),pathToA.c_str(),pathToB.c_str());
+    distributor->distribute();
+    delete(distributor);
+}
 
 int main() {
     std::string projectPath = "/home/miczi/ClionProjects/polyphase-external-sort-edu/";
@@ -12,40 +81,15 @@ int main() {
     std::string tape_B_path = projectPath + "B";
     std::string tape_C_path = projectPath + "C";
 
-    //  GENERATE
-    ConeGenerator* generator = new ConeGenerator(tape_INPUT_path.c_str());
-    generator->generate(13);
-    delete generator;
-
-    //  DISPLAY GENERATED
-    Tape* inputTape = new Tape(tape_INPUT_path.c_str(),"INPUT", 1, true);
-    inputTape->display_tape();
-    delete inputTape;
 
 
+    populate_input_tape(tape_INPUT_path);
+    display_generated_input_tape(tape_INPUT_path);
+
+    int bufferSize = 3;
+    run_distribution(bufferSize,tape_INPUT_path,tape_A_path,tape_B_path);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    std::cout<<std::endl<<std::endl<<"--- DISTRIBUTION PHASE ----"<<std::endl;
-
-    //  DISTRIBUTION -> specify bufferSize if you want to
-    unsigned int bufferSize = 3;
-    Distributor* distributor = new Distributor(bufferSize,tape_INPUT_path.c_str(),tape_A_path.c_str(),tape_B_path.c_str());
-    distributor->distribute();
-    delete(distributor);
 
 
     //  DISPLAY A and B AFTER DISTRIBUTION

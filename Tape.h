@@ -19,9 +19,9 @@ private:
     std::fstream stream;
 
 public:
-    unsigned int bufferSize;
+    int bufferSize;
 
-    Tape(const std::string& path_,const std::string& name_,unsigned int bufferSize_) : stream(path_,std::ios::out | std::ios::binary),buffer(){
+    Tape(const std::string& path_,const std::string& name_,int bufferSize_) : stream(path_,std::ios::out | std::ios::binary),buffer(){
         //open for writing
         name = name_;
         path = path_;
@@ -29,7 +29,7 @@ public:
         buffer.reserve(bufferSize_);
     }
 
-    Tape(const std::string& path_,const std::string& name_,unsigned int bufferSize_, bool readMode) : stream(path_,std::ios::in | std::ios::binary),buffer(){
+    Tape(const std::string& path_,const std::string& name_,int bufferSize_, bool readMode) : stream(path_,std::ios::in | std::ios::binary),buffer(){
         //open for reading
         name = name_;
         path = path_;

@@ -21,16 +21,16 @@ class Distributor {
     Tape* currentTape;
     std::vector<Cone> readBuffer;
 
-    unsigned int bufferSize;
-    unsigned int seriesOnA;
-    unsigned int seriesOnB;
+    int bufferSize;
+    int seriesOnA;
+    int seriesOnB;
     bool elementInserted;
 
     FibonacciGenerator fibonacciGenerator;
 
 
 public:
-    Distributor(unsigned int bufferSize_,
+    Distributor(int bufferSize_,
                 const std::string& inputPath,
                 const std::string& aPath,
                 const std::string& bPath):
@@ -82,7 +82,7 @@ public:
     }
 
     bool fib_limit_reached() {
-        unsigned int series, limit;
+        int series, limit;
         if (currentTape == &aTape) {
             series = seriesOnA;
         } else if (currentTape == &bTape) {
@@ -103,7 +103,7 @@ public:
     }
 
     void decrease_series_counter() {
-        unsigned int series;
+        int series;
         if (currentTape == &aTape) {
             series = --seriesOnA;
         } else if (currentTape == &bTape) {
@@ -118,20 +118,20 @@ public:
     void distribute(){
         // initially: show file size, count how many whole buffers we need to read
         // and how big is the last one(not fully filled)
-        unsigned int fileSize = inputTape.file_size();
+        int fileSize = inputTape.file_size();
         std::cout<< "taśma INPUT zawiera " << fileSize << " bajtów"<<std::endl;
-        unsigned int recordsInFile = fileSize/sizeof(Cone);// size in records
-        unsigned int wholeBuffersNumber = recordsInFile / bufferSize;
+        int recordsInFile = fileSize/sizeof(Cone);// size in records
+        int wholeBuffersNumber = recordsInFile / bufferSize;
         int recordsInLastBuffer = recordsInFile - wholeBuffersNumber * bufferSize;
 
 
         // begin the proper action
-        unsigned int buffersAlreadyRead = 0;
+        int buffersAlreadyRead = 0;
         while(buffersAlreadyRead < wholeBuffersNumber){
             LAST_READ:  //  label used only once in last run(smaller chunk at the end of the input file)
 
             inputTape.getStream().read(reinterpret_cast<char *>(readBuffer.data()), sizeof(Cone) * bufferSize);
-            for(unsigned int readBufferIndex = 0; readBufferIndex<bufferSize;readBufferIndex++){
+            for(int readBufferIndex = 0; readBufferIndex<bufferSize;readBufferIndex++){
                 do{
                     Cone last = currentTape->last_from_buffer();
 
