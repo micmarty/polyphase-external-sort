@@ -174,7 +174,7 @@ public:
             recordsInLastBuffer=-1;             //  just as a flag
             goto LAST_READ;
         }
-        count_new_series(&aTape);   //  we had to stop at some point, so no matter what, we need to count it as a series
+        count_new_series(currentTape);   //  we had to stop at some point, so no matter what, we need to count it as a series
                                     //                 . . . 1 3 | 1 |
                                     //                               ^
                                     //  that's what we need to count
@@ -182,6 +182,9 @@ public:
         //  write records that are still in buffer
         aTape.flush_buffer_to_tape();
         bTape.flush_buffer_to_tape();
+
+        std::cout<<"PO DYSTRYBUCJI NA A jest: "<<seriesOnA<<" serii" << std::endl;
+        std::cout<<"PO DYSTRYBUCJI NA B jest: "<<seriesOnB<<" serii" << std::endl;
     }
 
 };

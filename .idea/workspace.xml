@@ -12,13 +12,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83f63231-5868-40a6-8756-ade6f587f3b8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MergingHandler.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/polyphase-external-sort.iml" afterPath="$PROJECT_DIR$/.idea/polyphase-external-sort.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Cone.h" afterPath="$PROJECT_DIR$/Cone.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConeGenerator.h" afterPath="$PROJECT_DIR$/ConeGenerator.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Distributor.h" afterPath="$PROJECT_DIR$/Distributor.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FibonacciGenerator.h" afterPath="$PROJECT_DIR$/FibonacciGenerator.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MergingHandler.h" afterPath="$PROJECT_DIR$/MergingHandler.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tape.h" afterPath="$PROJECT_DIR$/Tape.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
     </list>
     <ignored path="polyphase-external-sort.iws" />
@@ -42,8 +41,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="388">
+              <caret line="66" column="57" selection-start-line="66" selection-start-column="57" selection-end-line="66" selection-end-column="57" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -54,8 +53,8 @@
       <file leaf-file-name="MergingHandler.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MergingHandler.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="109" column="17" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
+            <state relative-caret-position="513">
+              <caret line="269" column="62" selection-start-line="269" selection-start-column="62" selection-end-line="269" selection-end-column="62" />
               <folding>
                 <element signature="e#140#157#0" expanded="true" />
               </folding>
@@ -66,18 +65,8 @@
       <file leaf-file-name="Cone.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Cone.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
-              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stl_function.h" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/include/c++/6.2.1/bits/stl_function.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7110">
-              <caret line="395" column="0" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
+            <state relative-caret-position="918">
+              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -86,8 +75,8 @@
       <file leaf-file-name="Distributor.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Distributor.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2448">
-              <caret line="136" column="0" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+            <state relative-caret-position="3348">
+              <caret line="186" column="58" selection-start-line="186" selection-start-column="58" selection-end-line="186" selection-end-column="58" />
               <folding>
                 <element signature="e#134#152#0" expanded="true" />
                 <element signature="e#1544#2072#0" expanded="false" />
@@ -101,8 +90,8 @@
       <file leaf-file-name="ConeGenerator.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="36" column="36" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
+            <state relative-caret-position="540">
+              <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
               <folding>
                 <element signature="e#138#155#0" expanded="true" />
               </folding>
@@ -113,13 +102,23 @@
       <file leaf-file-name="Tape.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tape.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2268">
-              <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
+            <state relative-caret-position="2358">
+              <caret line="131" column="38" selection-start-line="131" selection-start-column="11" selection-end-line="131" selection-end-column="38" />
               <folding>
                 <element signature="e#119#136#0" expanded="true" />
-                <element signature="e#1267#1419#0" expanded="false" />
-                <element signature="e#1425#1632#0" expanded="false" />
+                <element signature="e#1266#1418#0" expanded="false" />
+                <element signature="e#1424#1631#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stl_vector.h" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/include/c++/6.2.1/bits/stl_vector.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="803" column="0" selection-start-line="803" selection-start-column="0" selection-end-line="803" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -132,13 +131,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/FibonacciGenerator.h" />
         <option value="$PROJECT_DIR$/CONSTANTS.h" />
+        <option value="$PROJECT_DIR$/Cone.h" />
+        <option value="$PROJECT_DIR$/FibonacciGenerator.h" />
+        <option value="$PROJECT_DIR$/Distributor.h" />
+        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/Tape.h" />
         <option value="$PROJECT_DIR$/ConeGenerator.h" />
-        <option value="$PROJECT_DIR$/Distributor.h" />
-        <option value="$PROJECT_DIR$/Cone.h" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/MergingHandler.h" />
       </list>
     </option>
@@ -160,7 +159,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -173,15 +172,13 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane />
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.polyphase_external_sort">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="polyphase_external_sort" TARGET_NAME="polyphase_external_sort" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
@@ -356,12 +353,21 @@
       <workItem from="1477829619245" duration="11318000" />
       <workItem from="1477908604270" duration="2280000" />
       <workItem from="1478001298791" duration="3767000" />
-      <workItem from="1478013561532" duration="5416000" />
+      <workItem from="1478013561532" duration="14960000" />
+      <workItem from="1478030634874" duration="2839000" />
+      <workItem from="1478036201667" duration="619000" />
+      <workItem from="1478085324216" duration="13744000" />
+      <workItem from="1478109068502" duration="375000" />
+      <workItem from="1478116968142" duration="1472000" />
+      <workItem from="1478174119746" duration="882000" />
+      <workItem from="1478192672658" duration="29000" />
+      <workItem from="1478203588846" duration="5853000" />
+      <workItem from="1478252558948" duration="3328000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57736000" />
+    <option name="totallyTimeSpent" value="96421000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="27" width="1859" height="1053" extended-state="6" />
@@ -373,11 +379,11 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24690694" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3598709" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.086605705" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26035503" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -424,21 +430,24 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/MergingHandler.h</url>
           <line>128</line>
-          <option name="timeStamp" value="61" />
+          <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/MergingHandler.h</url>
-          <line>120</line>
-          <option name="timeStamp" value="62" />
+          <line>260</line>
+          <option name="timeStamp" value="93" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="63" />
+      <option name="time" value="94" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="*currentIndex" language="ObjectiveC" />
         <watch expression="elementOnCurrent" language="ObjectiveC" />
         <watch expression="elementOnOther" language="ObjectiveC" />
+        <watch expression="currentTape-&gt;getBuffer()" />
+        <watch expression="bajtowDoKonca" language="ObjectiveC" />
+        <watch expression="rekordowDoKonca" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>
@@ -449,8 +458,8 @@
           <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -487,7 +496,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7110">
           <caret line="395" column="0" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -520,8 +528,8 @@
           <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -558,7 +566,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7110">
           <caret line="395" column="0" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -591,8 +598,8 @@
           <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -636,8 +643,8 @@
           <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -688,8 +695,8 @@
           <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -733,8 +740,8 @@
           <caret line="63" column="82" selection-start-line="63" selection-start-column="72" selection-end-line="63" selection-end-column="82" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -743,7 +750,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -786,8 +792,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -811,7 +817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -823,13 +828,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CONSTANTS.h" />
-    <entry file="file://$PROJECT_DIR$/FibonacciGenerator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/6.2.1/bits/stl_construct.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
@@ -841,13 +839,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="441" column="0" selection-start-line="441" selection-start-column="0" selection-end-line="441" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/c++/6.2.1/bits/stl_vector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -865,40 +856,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="36" column="36" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
-          <folding>
-            <element signature="e#138#155#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tape.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2268">
-          <caret line="126" column="69" selection-start-line="126" selection-start-column="69" selection-end-line="126" selection-end-column="69" />
-          <folding>
-            <element signature="e#119#136#0" expanded="true" />
-            <element signature="e#1267#1419#0" expanded="false" />
-            <element signature="e#1425#1632#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/6.2.1/bits/stl_function.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7110">
           <caret line="395" column="0" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FibonacciGenerator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Distributor.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2448">
-          <caret line="136" column="0" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+        <state relative-caret-position="3348">
+          <caret line="186" column="58" selection-start-line="186" selection-start-column="58" selection-end-line="186" selection-end-column="58" />
           <folding>
             <element signature="e#134#152#0" expanded="true" />
             <element signature="e#1544#2072#0" expanded="false" />
@@ -910,16 +885,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Cone.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        <state relative-caret-position="918">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tape.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2358">
+          <caret line="131" column="38" selection-start-line="131" selection-start-column="11" selection-end-line="131" selection-end-column="38" />
+          <folding>
+            <element signature="e#119#136#0" expanded="true" />
+            <element signature="e#1266#1418#0" expanded="false" />
+            <element signature="e#1424#1631#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="41" column="36" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+          <folding>
+            <element signature="e#138#155#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/6.2.1/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="803" column="0" selection-start-line="803" selection-start-column="0" selection-end-line="803" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state relative-caret-position="388">
+          <caret line="66" column="57" selection-start-line="66" selection-start-column="57" selection-end-line="66" selection-end-column="57" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -928,8 +933,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MergingHandler.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="109" column="17" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
+        <state relative-caret-position="513">
+          <caret line="269" column="62" selection-start-line="269" selection-start-column="62" selection-end-line="269" selection-end-column="62" />
           <folding>
             <element signature="e#140#157#0" expanded="true" />
           </folding>

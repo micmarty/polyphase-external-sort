@@ -10,11 +10,13 @@ class FibonacciGenerator {
     unsigned int fib1;
     unsigned int fib2;
     unsigned int newFib;
+    bool zuzyto;
 public:
     FibonacciGenerator(){
         fib1 = 1;
         fib2 = 1;
         newFib = 1;
+        zuzyto = false;
     }
 
     unsigned int limit(){
@@ -23,6 +25,12 @@ public:
 
     /*  generate next in sequence, shift fib1 and fib2 to new values    */
     unsigned int next(){
+        if(!zuzyto && fib1 == 1 && fib2 == 1)
+        {
+            zuzyto = true;
+            return 1;
+        }
+
         newFib = fib1 + fib2;
         fib1 = fib2;
         fib2 = newFib;

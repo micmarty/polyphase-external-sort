@@ -13,14 +13,13 @@
 class Tape {
 
 private:
-    unsigned int bufferSize;
     std::string path;
     std::string name;
     std::vector<Cone> buffer;
     std::fstream stream;
 
-
 public:
+    unsigned int bufferSize;
 
     Tape(const std::string& path_,const std::string& name_,unsigned int bufferSize_) : stream(path_,std::ios::out | std::ios::binary),buffer(){
         //open for writing
@@ -102,11 +101,14 @@ public:
 
     //  display one by one :(
     void display_tape(){
+        int elementsCounter = 0;
+
         std::cout<<"zawartość taśmy " + name << std::endl;
         while (stream.read(reinterpret_cast<char *>(buffer.data()), sizeof(Cone) * 1)){
             std::cout << buffer.at(0).getVolume() << "\t";
+            elementsCounter++;
         }
-        std::cout<<std::endl;
+        std::cout<<std::endl<<"posiada "<<elementsCounter<<" elementow"<<std::endl;
     }
 
     Cone last_from_buffer() {
@@ -126,6 +128,17 @@ public:
 
         return end - begin;             //  return file size in bytes
     }
+
+    size_t file_size_and_save_position() {
+        std::streampos currentPosition = stream.tellg();
+        stream.seekg( 0, std::ios::end );
+
+        std::streamsize bytesLeft = stream.tellg() - currentPosition;
+
+        stream.seekg(currentPosition);
+        return bytesLeft;
+    }
+
 };
 
 
