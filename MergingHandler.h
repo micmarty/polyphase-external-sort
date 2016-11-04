@@ -14,7 +14,11 @@
 
 #define OTRZYMANO_PELNY_BUFOR 0
 #define OTRZYMANO_POMNIEJSZONY_BUFOR 1
+
+#define JEST_W_BUFORZE 0
+#define TRZEBA_ZALADOWAC_BUFOR 1
 #define KONIEC_TASMY -1
+
 
 class MergingHandler {
     Tape destinationTape;
@@ -115,21 +119,14 @@ public:
     }
 
 
-    int zaladuj_kolejny_bufor() {
+    void zaladuj_kolejny_bufor() {
         size_t bajtowDoKonca = currentTape->file_size_and_save_position();
         int rekordowDoKonca = bajtowDoKonca/sizeof(Cone);
+        *currentIndex = -1;  //resetujemy tutaj licznik na poczatek bufora
 
         //  zaladuj pelny bufor
         if(rekordowDoKonca >= currentTape->bufferSize){
             currentTape->getStream().read(reinterpret_cast<char *>(currentTape->getBuffer().data()), sizeof(Cone) * currentTape->getBuffer().size());
-            return OTRZYMANO_PELNY_BUFOR;
-        }
-        //  nie ma wiecej buforow na tasmie, bo jestesmy na koncu!
-        else if(rekordowDoKonca == 0){
-            currentTape->bufferSize = 0;
-            currentTape->getBuffer().resize(0);
-
-            return KONIEC_TASMY;
         }
         //  zaladuj pomniejszony bufor
         else if(rekordowDoKonca < currentTape->bufferSize){
@@ -138,7 +135,6 @@ public:
             currentTape->getBuffer().resize(rekordowDoKonca);
 
             currentTape->getStream().read(reinterpret_cast<char *>(currentTape->getBuffer().data()), sizeof(Cone) * currentTape->getBuffer().size());
-            return OTRZYMANO_POMNIEJSZONY_BUFOR;
         }
 
     }
@@ -146,52 +142,76 @@ public:
     int zaladuj_kolejny_bufor_z_other() {
         size_t bajtowDoKonca = other_tape()->file_size_and_save_position();
         int rekordowDoKonca = bajtowDoKonca/sizeof(Cone);
+        *other_index() = 0;
 
         //  zaladuj pelny bufor
         if(rekordowDoKonca >= other_tape()->bufferSize){
             other_tape()->getStream().read(reinterpret_cast<char *>(other_tape()->getBuffer().data()), sizeof(Cone) * other_tape()->getBuffer().size());
-            return OTRZYMANO_PELNY_BUFOR;
         }
-            //  zaladuj pomniejszony bufor
+        //  zaladuj pomniejszony bufor
         else if(rekordowDoKonca < other_tape()->bufferSize){
             //  zaktualizuj rozmiary bufora
             other_tape()->bufferSize = rekordowDoKonca;
             other_tape()->getBuffer().resize(rekordowDoKonca);
 
             other_tape()->getStream().read(reinterpret_cast<char *>( other_tape()->getBuffer().data()), sizeof(Cone) *  other_tape()->getBuffer().size());
-            return OTRZYMANO_POMNIEJSZONY_BUFOR;
-        }
-            //  nie ma wiecej buforow na tasmie, bo jestesmy na koncu!
-        else if(rekordowDoKonca == 0){
-            return KONIEC_TASMY;
         }
     }
 
-    bool sasiad_nie_przekroczy_tasmy() {
+    bool istnieje_bufor_do_zaladowania() {
+        size_t bajtowDoKonca = currentTape->file_size_and_save_position();
+        int rekordowDoKonca = bajtowDoKonca/sizeof(Cone);
+
+        //  nie ma wiecej buforow na tasmie, bo jestesmy na koncu!
+        if(rekordowDoKonca == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    bool istnieje_bufor_do_zaladowania_na_other() {
+        size_t bajtowDoKonca = other_tape()->file_size_and_save_position();
+        int rekordowDoKonca = bajtowDoKonca/sizeof(Cone);
+
+        //  nie ma wiecej buforow na tasmie, bo jestesmy na koncu!
+        if(rekordowDoKonca == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    int status_sasiada() {
         int neigh_index = (*currentIndex) + 1;
 
         //  sasiad lezy jeszcze w obrebie obecnego bufora
-        if(neigh_index < currentTape->getBuffer().size()){
-            std::cout<<"nie przekroczymy tasmy"<<std::endl;
-            return true;
+        if(neigh_index < currentTape->getBuffer().size()){                  std::cout<<"Nie przekroczymy tasmy. Obecny: "<<currentTape->getBuffer().at(*currentIndex).getVolume()<<", sasiad: "<<currentTape->getBuffer().at(neigh_index).getVolume()<<std::endl;
+            return JEST_W_BUFORZE;   //  nie przekroczy bo jest w zasiegu bufora
         }
         //  sasiad lezy poza buforem, trzeba zaladowac nowy bufor(pelny, lub pomniejszony - ostatni)
         else{
-            int statusTasmy = zaladuj_kolejny_bufor();
-            *currentIndex = -1;//wyzeruj index na poczatek bufora
-
-
-            if(statusTasmy == OTRZYMANO_PELNY_BUFOR){
-                std::cout<<"zaladowalem bufor pełny";currentTape->display_buffer_content();std::cout<<std::endl;
-                return true;
+            if(istnieje_bufor_do_zaladowania()){
+                return TRZEBA_ZALADOWAC_BUFOR;
+            }else{                                                          std::cout<<"Przekroczymy tasme, bo nie ma dalej żadnej serii."<<std::endl;
+                return KONIEC_TASMY;
             }
-            else if(statusTasmy == OTRZYMANO_POMNIEJSZONY_BUFOR){
-                std::cout<<"zaladowalem bufor pomniejszony";currentTape->display_buffer_content();std::cout<<std::endl;
-                return true;
-            }
-            else if(statusTasmy == KONIEC_TASMY){
-                std::cout<<"nie załadowałem bufora bo koniec tasmy"<<std::endl;
-                return false;   // czyli sasiad nie istnieje, bo current jest juz ostatnim na calej tasmie
+        }
+    }
+
+    int status_sasiada_na_other() {
+        int neigh_index = (*other_index()) + 1;
+
+        //  sasiad lezy jeszcze w obrebie obecnego bufora
+        if(neigh_index < other_tape()->getBuffer().size()){                  std::cout<<"Nie przekroczymy tasmy. Obecny: "<<other_tape()->getBuffer().at(*other_index()).getVolume()<<", sasiad: "<<other_tape()->getBuffer().at(neigh_index).getVolume()<<std::endl;
+            return JEST_W_BUFORZE;   //  nie przekroczy bo jest w zasiegu bufora
+        }
+            //  sasiad lezy poza buforem, trzeba zaladowac nowy bufor(pelny, lub pomniejszony - ostatni)
+        else{
+            if(istnieje_bufor_do_zaladowania_na_other()){
+                return TRZEBA_ZALADOWAC_BUFOR;
+            }else{                                                          std::cout<<"Przekroczymy tasme, bo nie ma dalej żadnej serii."<<std::endl;
+                return KONIEC_TASMY;
             }
         }
     }
@@ -206,7 +226,7 @@ public:
             //  sasiad lezy poza buforem, trzeba zaladowac nowy bufor(pelny, lub pomniejszony - ostatni)
         else{
             int statusTasmy = zaladuj_kolejny_bufor_z_other();
-            *other_index() = -1;//wyzeruj index na poczatek bufora
+            *other_index() = 0;//wyzeruj index na poczatek bufora
             std::cout<<"zaladowalem bufor ";currentTape->display_buffer_content();std::cout<<std::endl;
 
             if(statusTasmy == OTRZYMANO_PELNY_BUFOR || statusTasmy == OTRZYMANO_POMNIEJSZONY_BUFOR)
@@ -219,10 +239,10 @@ public:
     bool sasiad_nalezy_do_serii(Cone current) {
         //  porownaj obecny z sasiadujacym
         if(current <= currentTape->getBuffer().at((*currentIndex) + 1)){
-            std::cout<<"tak"<<std::endl;
+            std::cout<<"Sąsiad należy do serii."<<std::endl;
             return true;
         }
-        std::cout<<"nie"<<std::endl;
+        std::cout<<"Sąsiad należy do nowej serii."<<std::endl;
         return false;
     }
 
@@ -232,10 +252,13 @@ public:
     }
 
     Cone zmien_tasme() {
+        std::cout<<"Zmieniam taśmę."<<std::endl;
         currentTape = other_tape();
         currentIndex = other_index();
         return currentTape->getBuffer().at(*currentIndex);
     }
+
+
 
     void merge(){
         using namespace std;
@@ -255,45 +278,71 @@ public:
         Cone elementOnCurrent = currentTape->getBuffer().at(*currentIndex);
         Cone elementOnOther = other_tape()->getBuffer().at(*other_index());
 
-
-        // ZLE PRZESUWAJA SIE INDEXY W NOWYM BUFORZE!!!! TODO
-        for(int scalanieSerii=1;scalanieSerii<=3;scalanieSerii++){
+        bool napotkanoKoniecJednejZTasm = false;
+        for(int scalanieSerii=1;scalanieSerii<=13;scalanieSerii++){
             int napotkanoKoniecSerii = 0;
 
             while(napotkanoKoniecSerii != 2){
                 cout<<elementOnCurrent.getVolume()<<"<="<<elementOnOther.getVolume()<<endl;
-                if(elementOnCurrent <= elementOnOther || napotkanoKoniecSerii==1){
+                if(elementOnCurrent <= elementOnOther || napotkanoKoniecSerii==1) {
+                    //  wstaw mniejszy z dwoch
                     destinationTape.insert_element_into_tape_buffer(elementOnCurrent);//wpisz
 
-                    if(sasiad_nie_przekroczy_tasmy() && sasiad_nalezy_do_serii(elementOnCurrent)){
-                        elementOnCurrent = sasiad_current();    //  przesuwa index current i przypisuje sasiada jako elemCurrent
-                    }else if(sasiad_nie_przekroczy_tasmy() && !sasiad_nalezy_do_serii(elementOnCurrent)){
-                        napotkanoKoniecSerii++;
+                    //  obczaj gdzie jest sasiad, cyz w ogole jest ?!?
+                    int akcjaPrzedUstawieniemSasiada = status_sasiada();    //  JEST_W_BUFORZE || TRZEBA_ZALADOWAC_BUFOR || KONIEC_TASMY
+
+                    //  jesli sasiad gdzies jest
+                    if (akcjaPrzedUstawieniemSasiada == JEST_W_BUFORZE ||
+                        akcjaPrzedUstawieniemSasiada == TRZEBA_ZALADOWAC_BUFOR) {
+
+                        // ale jest na nastepnym buforze
+                        if (akcjaPrzedUstawieniemSasiada == TRZEBA_ZALADOWAC_BUFOR)
+                            //  to pobierz bufor
+                            zaladuj_kolejny_bufor();    // i wyzeruj index
+
+                        //  jesli jest <=, to on staje sie currenetm teraz
+                        if (sasiad_nalezy_do_serii(elementOnCurrent)) {
+                            elementOnCurrent = sasiad_current();
+                        } else {
+                            //  jesli nie, to znaczy ze jest poczatkiem nowej serii, wracamy wiec na druga tasme
+                            //skoro opuszczamy te tasme to trzeba przywrocic index na nową serię
+                            *currentIndex += 1;
+                            napotkanoKoniecSerii++;
+                            elementOnOther = elementOnCurrent;
+                            elementOnCurrent = zmien_tasme();
+                        }
+                        // jesli sasiad obecnego elementu juz nie istnieje, bo skonczyla sie tasma
+                    } else if (akcjaPrzedUstawieniemSasiada == KONIEC_TASMY) {
+                        napotkanoKoniecJednejZTasm = true;
                         elementOnOther = elementOnCurrent;
                         elementOnCurrent = zmien_tasme();
+                        napotkanoKoniecSerii++;
                     }
-                }else{
+
+                }
+                else{
                     elementOnOther = elementOnCurrent;
                     elementOnCurrent = zmien_tasme();
                 }
 
-            }
-            //zakonczylismy poprzednia, serie i przesuwamy currenty na elementy z nowej serii
-            if(sasiad_nie_przekroczy_tasmy()){
-                (*currentIndex) += 1;
-                elementOnCurrent = currentTape->getBuffer().at(*currentIndex);
-                cout<<"przygotowanie do " <<scalanieSerii + 1<< "serii, elementOnCurrent = " << elementOnCurrent.getVolume()<<" ,index = " <<*currentIndex<<endl;
-            }
-            if(sasiad_na_other_nie_przekroczy_tasmy()){
-                *other_index() += 1;
-                elementOnOther = other_tape()->getBuffer().at(*other_index());
-                cout<<"przygotowanie do " <<scalanieSerii + 1<< "serii, elementOnOther = " << elementOnOther.getVolume()<<" ,index = " <<*other_index()<<endl;
+
             }
 
-
-
-
-
+            if(!napotkanoKoniecJednejZTasm){
+                //zakonczylismy poprzednia, serie i przesuwamy currenty na elementy z nowej serii
+                if(status_sasiada() != KONIEC_TASMY){
+                    elementOnCurrent = currentTape->getBuffer().at(*currentIndex);
+                    cout<<endl<<endl<<endl<<"przygotowanie do " <<scalanieSerii + 1<< "serii, elementOnCurrent = " << elementOnCurrent.getVolume()<<" ,index = " <<*currentIndex<<endl;
+                }
+                if(status_sasiada_na_other() != KONIEC_TASMY){
+                    elementOnOther = other_tape()->getBuffer().at(*other_index());
+                    cout<<"przygotowanie do " <<scalanieSerii + 1<< "serii, elementOnOther = " << elementOnOther.getVolume()<<" ,index = " <<*other_index()<<endl;
+                }
+            }else{
+                destinationTape.flush_buffer_to_tape();
+                std::cout<<"natychmiast wychodze " << std::endl;
+                break;
+            }
         }
 
 
