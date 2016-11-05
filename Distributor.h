@@ -7,6 +7,7 @@
 
 
 #include <climits>
+#include <utility>
 #include "Tape.h"
 #include "FibonacciGenerator.h"
 
@@ -115,6 +116,7 @@ public:
 
 
 
+
     void distribute(){
         // initially: show file size, count how many whole buffers we need to read
         // and how big is the last one(not fully filled)
@@ -131,6 +133,8 @@ public:
             LAST_READ:  //  label used only once in last run(smaller chunk at the end of the input file)
 
             inputTape.getStream().read(reinterpret_cast<char *>(readBuffer.data()), sizeof(Cone) * bufferSize);
+            inputTape.readsFromTheDisk++;
+
             for(int readBufferIndex = 0; readBufferIndex<bufferSize;readBufferIndex++){
                 do{
                     Cone last = currentTape->last_from_buffer();
@@ -183,9 +187,19 @@ public:
         aTape.flush_buffer_to_tape();
         bTape.flush_buffer_to_tape();
 
-        std::cout<<"PO DYSTRYBUCJI NA A jest: "<<seriesOnA<<" serii" << std::endl;
-        std::cout<<"PO DYSTRYBUCJI NA B jest: "<<seriesOnB<<" serii" << std::endl;
+
+        display_statistics();
     }
+
+    void display_statistics() {
+        std::cout<<"PO DYSTRYBUCJI NA A jest: "<<seriesOnA<<" serii\n";
+        std::cout<<"PO DYSTRYBUCJI NA B jest: "<<seriesOnB<<" serii\n\n";
+        std::cout<<"ODCZYTY Z TAŚMY INPUT: "<<inputTape.readsFromTheDisk << "\n"
+                 <<"ZAPISY NA TAŚMĘ A:     " << aTape.writesToTheDisk<<"\n"
+                 <<"ZAPISY NA TAŚMĘ B:     "<<bTape.writesToTheDisk<<"\n\n";
+    }
+
+
 
 };
 

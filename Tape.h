@@ -18,8 +18,12 @@ private:
     std::vector<Cone> buffer;
     std::fstream stream;
 
+
+
 public:
     int bufferSize;
+    int readsFromTheDisk;
+    int writesToTheDisk;
 
     Tape(const std::string& path_,const std::string& name_,int bufferSize_) : stream(path_,std::ios::out | std::ios::binary),buffer(){
         //open for writing
@@ -27,6 +31,9 @@ public:
         path = path_;
         bufferSize= bufferSize_;
         buffer.reserve(bufferSize_);
+
+        readsFromTheDisk = 0;
+        writesToTheDisk = 0;
     }
 
     Tape(const std::string& path_,const std::string& name_,int bufferSize_, bool readMode) : stream(path_,std::ios::in | std::ios::binary),buffer(){
@@ -35,6 +42,9 @@ public:
         path = path_;
         bufferSize = bufferSize_;
         buffer.resize(bufferSize_);
+
+        readsFromTheDisk = 0;
+        writesToTheDisk = 0;
     }
 
     Tape(Tape&);
@@ -92,11 +102,13 @@ public:
 
     void persist_buffer(){
         stream.write(reinterpret_cast<const char*>(buffer.data()), buffer.size() * sizeof(Cone));
+        writesToTheDisk++;
     }
 
     //  put given vector onto the tape
     void persist_vector(std::vector<Cone>& v){
         stream.write(reinterpret_cast<const char*>(v.data()), v.size() * sizeof(Cone));
+
     }
 
     //  display one by one :(
@@ -119,6 +131,7 @@ public:
     }
 
 
+/*  UTILITIES   */
     size_t file_size() {
         long begin = stream.tellg();    //  measure byte we are at
         stream.seekg (0, std::ios::end);//  go to the end
@@ -137,6 +150,11 @@ public:
 
         stream.seekg(currentPosition);
         return bytesLeft;
+    }
+
+    std::pair<int, int> reads_and_writes()
+    {
+        return std::make_pair(readsFromTheDisk, writesToTheDisk);
     }
 
 };

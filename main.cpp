@@ -24,39 +24,46 @@ int choosen_data_source() {
     }
 }
 
+void load_from_keyboard(ConeGenerator* generator) {
+    std::cout<<"Now you need, to give me records separated by spaces\nIn order to end the sequence give me -1 in input\n";
+
+    //TODO load radius and height! so two arrays!
+    std::vector<float> radiusVector;
+    float radius;
+    while ((std::cin >> radius) && radius != -1)
+        radiusVector.push_back(radius);
+
+    generator->import_from_vector(radiusVector, radiusVector, radiusVector.size()); //TODO replace second argument with heights
+}
+
+void load_from_file(ConeGenerator* generator) {
+    std::ifstream inputData("/home/miczi/ClionProjects/polyphase-external-sort/input.txt");
+    if (inputData) {
+        std::vector<float> radiusVector;
+        float radius;
+
+        // read the elements in the file into a vector
+        while ( inputData >> radius ) {
+            radiusVector.push_back(radius);
+        }
+        generator->import_from_vector(radiusVector, radiusVector, radiusVector.size()); //TODO replace second argument with heights
+    }
+}
+
 void populate_input_tape(std::string path) {
     ConeGenerator* generator = new ConeGenerator(path.c_str());
     int wayToPopulateInputTame = choosen_data_source();
 
     if(wayToPopulateInputTame == LOAD_DATA_FROM_KEYBOARD_INPUT){
-        std::cout<<"Now you need, to give me records separated by spaces\nIn order to end the sequence give me -1 in input\n";
-
-        //TODO load radius and height! so two arrays!
-        std::vector<float> radiusVector;
-        float radius;
-        while ((std::cin >> radius) && radius != -1)
-            radiusVector.push_back(radius);
-
-        generator->import_from_vector(radiusVector, radiusVector, radiusVector.size()); //TODO replace second argument with heights
+        load_from_keyboard(generator);
     }else if(wayToPopulateInputTame == LOAD_FROM_FILE){
-        std::ifstream inputData("/home/miczi/ClionProjects/polyphase-external-sort/input.txt");
-        if (inputData) {
-            std::vector<float> radiusVector;
-            float radius;
-
-            // read the elements in the file into a vector
-            while ( inputData >> radius ) {
-                radiusVector.push_back(radius);
-            }
-            generator->import_from_vector(radiusVector, radiusVector, radiusVector.size()); //TODO replace second argument with heights
-        }
+        load_from_file(generator);
     }else if(wayToPopulateInputTame == GENERATE_DATA){
         std::cout<<"Now you need, to specify how many of records would you want to generate: ";
         int recordsToGenerate;
         std::cin >> recordsToGenerate;
         generator->generate(recordsToGenerate);
     }
-
     delete generator;
 }
 
@@ -66,12 +73,26 @@ void display_generated_input_tape(std::string path) {
     delete inputTape;
 }
 
-void run_distribution(int bufferSize,std::string pathToINPUT, std::string pathToA, std::string pathToB) {
+void run_distribution_and_show_reads_and_writes(int bufferSize,std::string pathToINPUT, std::string pathToA, std::string pathToB) {
     std::cout<<"\n\n\n--- DISTRIBUTION PHASE ----\n";
 
     Distributor* distributor = new Distributor(bufferSize,pathToINPUT.c_str(),pathToA.c_str(),pathToB.c_str());
     distributor->distribute();
     delete(distributor);
+}
+
+void display_more_statistics_after_distribution(std::string pathA,std::string pathB) {
+    Tape* tape = new Tape(pathA.c_str(),"A", 1,true);
+
+    std::cout<<"\n\ntaśma A zawiera " << tape->file_size()<< " bajtów"<<std::endl;
+    tape->display_tape();
+
+    tape = new Tape(pathB.c_str(),"B", 1,true);
+
+    std::cout<<"\n\ntaśma B zawiera " << tape->file_size()<< " bajtów"<<std::endl;
+    tape->display_tape();
+
+    delete tape;
 }
 
 int main() {
@@ -87,35 +108,25 @@ int main() {
     display_generated_input_tape(tape_INPUT_path);
 
     int bufferSize = 3;
-    run_distribution(bufferSize,tape_INPUT_path,tape_A_path,tape_B_path);
-
-
-
+    run_distribution_and_show_reads_and_writes(bufferSize,tape_INPUT_path,tape_A_path,tape_B_path);
 
     //  DISPLAY A and B AFTER DISTRIBUTION
-    Tape* tape = new Tape(tape_A_path.c_str(),"A", 1,true);
-    std::cout<<std::endl<<std::endl;
-    std::cout<<"taśma A zawiera " << tape->file_size()<< " bajtów"<<std::endl;
-    tape->display_tape();
-    tape = new Tape(tape_B_path.c_str(),"B", 1,true);
-    std::cout<<std::endl<<std::endl;
-    std::cout<<"taśma B zawiera " << tape->file_size()<< " bajtów"<<std::endl;
-    tape->display_tape();
-    delete tape;
+    display_more_statistics_after_distribution(tape_A_path, tape_B_path);
 
-
-    //  SORTING
-    std::cout<<std::endl<<std::endl<<"--- SORTING AND MERGING PHASE ----"<<std::endl;
-
-    //  sorting and merging phase
-    MergingHandler* mergingHandler = new MergingHandler(3,tape_C_path,tape_A_path,tape_B_path);
-    mergingHandler->merge();
-    delete mergingHandler;
-
-
-    tape = new Tape(tape_C_path.c_str(),"C", 1,true);
-    std::cout<<std::endl<<std::endl;
-    tape->display_tape();
+//
+//
+//    //  SORTING
+//    std::cout<<std::endl<<std::endl<<"--- SORTING AND MERGING PHASE ----"<<std::endl;
+//
+//    //  sorting and merging phase
+//    MergingHandler* mergingHandler = new MergingHandler(3,tape_C_path,tape_A_path,tape_B_path);
+//    mergingHandler->merge();
+//    delete mergingHandler;
+//
+//
+//    tape = new Tape(tape_C_path.c_str(),"C", 1,true);
+//    std::cout<<std::endl<<std::endl;
+//    tape->display_tape();
 
 
 

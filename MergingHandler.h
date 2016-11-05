@@ -12,6 +12,7 @@
 #include "Cone.h"
 #include "Tape.h"
 
+
 #define JEST_W_BUFORZE 0
 #define TRZEBA_ZALADOWAC_BUFOR 1
 #define KONIEC_TASMY -1
@@ -70,6 +71,7 @@ public:
         //  zaladuj pelny bufor
         if(rekordowDoKonca >= currentTape->bufferSize){
             currentTape->getStream().read(reinterpret_cast<char *>(currentTape->getBuffer().data()), sizeof(Cone) * currentTape->getBuffer().size());
+            currentTape->readsFromTheDisk++;
         }
         //  zaladuj pomniejszony bufor
         else if(rekordowDoKonca < currentTape->bufferSize){
@@ -78,6 +80,7 @@ public:
             currentTape->getBuffer().resize(rekordowDoKonca);
 
             currentTape->getStream().read(reinterpret_cast<char *>(currentTape->getBuffer().data()), sizeof(Cone) * currentTape->getBuffer().size());
+            currentTape->readsFromTheDisk++;
         }
 
     }
@@ -163,12 +166,27 @@ public:
     }
 
 
+    void run_merging_process(int seriesOnA, int seriesOnB){
+        //  obie są fibonacim
+        //  destination juz jest C i na zapis
+        if(FibonacciGenerator::is_fib(std::max(seriesOnA,seriesOnB))){
+            Tape* shorterTape = (std::min(seriesOnA,seriesOnB))?&firstTape:&secondTape;
+            shorterTape = merge(destinationTape);
+            shorterTape.open_for_writing();
+            destinationTape.open_for_reading();
+        }else{
+            //  trzeba obliczyc ilosc dummy serii
+        }
+    }
 
     void merge(){
         using namespace std;
         //  read one chunk from these 2 input tapes
         firstTape.getStream().read(reinterpret_cast<char *>(firstTape.getBuffer().data()), sizeof(Cone) * firstTape.getBuffer().size());
         secondTape.getStream().read(reinterpret_cast<char *>(secondTape.getBuffer().data()), sizeof(Cone) * secondTape.getBuffer().size());
+
+        firstTape.readsFromTheDisk++;
+        secondTape.readsFromTheDisk++;
 
         //DEBUG
         firstTape.display_buffer_content();
