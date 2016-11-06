@@ -71,6 +71,12 @@ public:
         std::cout<<std::endl;
     }
 
+    void display_vector_content(std::vector<Cone>& vector) {
+        for(Cone c: vector){
+            std::cout<< c.getVolume() <<"\t";
+        }
+    }
+
     void flush_buffer_to_tape() {
         std::cout<<"~  czyszczenie resztek w buforze "<<name<<", zrzucam na tasme: ";
         display_buffer_content();
@@ -123,6 +129,31 @@ public:
         std::cout<<std::endl<<"posiada "<<elementsCounter<<" elementow"<<std::endl;
     }
 
+    std::streampos display_tape_but_save_position() {
+        std::streampos savedPosition = stream.tellg();
+
+        //  reset all no matter what
+        stream.clear();
+        //stream.close();
+        stream.open(path,std::ios::in|std::ios::binary);
+
+        //  the reading and displaying part
+        size_t bytesToRead = file_size();
+        std::vector<Cone> tmpBuffer(bytesToRead/sizeof(Cone));
+        std::cout<<"zawartość taśmy " + name << std::endl;
+        stream.read(reinterpret_cast<char *>(tmpBuffer.data()), bytesToRead);
+        display_vector_content(tmpBuffer);
+        std::cout<<std::endl;
+
+        //  turn writing mode
+        stream.clear();
+        //stream.close();
+        stream.open(path,std::ios::out|std::ios::binary);
+        stream.seekg(savedPosition);
+
+        return savedPosition;
+    }
+
     Cone last_from_buffer() {
         if(!buffer.empty())
             return buffer.back();
@@ -156,6 +187,7 @@ public:
     {
         return std::make_pair(readsFromTheDisk, writesToTheDisk);
     }
+
 
 };
 

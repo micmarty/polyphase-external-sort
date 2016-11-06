@@ -17,30 +17,40 @@
 #define TRZEBA_ZALADOWAC_BUFOR 1
 #define KONIEC_TASMY -1
 
+#define A 1
+#define B 2
+#define C 3
 
 class MergingHandler {
-    Tape destinationTape;
-    Tape firstTape;
-    Tape secondTape;
+    Tape cTape;
+    Tape aTape;
+    Tape bTape;
+
+    Tape* shorterTape;
+    Tape* longerTape;
+    Tape* destinationTape;
+
     Tape* currentTape;
 
     int indexFirst;
     int indexSecond;
     int* currentIndex;
+    int bufferSize;
 
 public:
     MergingHandler(int bufferSize_,
-                   const std::string& destinationPath,
-                   const std::string& firstPath,
-                   const std::string& secondPath):
-            destinationTape(destinationPath,"DESTINATION",bufferSize_),
-            firstTape(firstPath, "FIRST", bufferSize_,true),
-            secondTape(secondPath, "SECOND", bufferSize_,true)
+                   const std::string& cPath,
+                   const std::string& aPath,
+                   const std::string& bPath):
+            cTape(cPath,"C",bufferSize_),
+            aTape(aPath, "A", bufferSize_,true),
+            bTape(bPath, "B", bufferSize_,true)
     {
         indexFirst = 0;
         indexSecond = 0;
-        currentTape = &firstTape;
+        currentTape = &aTape;
         currentIndex = &indexFirst;
+        bufferSize = bufferSize_;
     }
 
     ~MergingHandler()
@@ -49,10 +59,10 @@ public:
     }
 
     Tape* other_tape(){
-        if(currentTape == &firstTape){
-            return &secondTape;
-        }else if(currentTape == &secondTape){
-            return &firstTape;
+        if(currentTape == shorterTape){
+            return longerTape;
+        }else if(currentTape == longerTape){
+            return shorterTape;
         }
     }
 
@@ -165,36 +175,117 @@ public:
         return currentTape->getBuffer().at(*currentIndex);
     }
 
+    void set_as_destination(int tape){
+        if(tape == A){
+            destinationTape = &aTape;
+        }else if(tape == B){
+            destinationTape = &bTape;
+        }else if(tape == C){
+            destinationTape = &cTape;
+        }
+    }
+
+    void reopen_longer_for_reading(std::streampos pos) {
+        longerTape->getStream().close();
+        longerTape->getStream().open(longerTape->getPath(),std::ios::in|std::ios::binary);
+        //longerTape->getStream().seekg(pos);
+    }
+
+    void reopen_destination_for_writing() {
+        destinationTape->getStream().close();
+        destinationTape->getStream().open(destinationTape->getPath(),std::ios::out|std::ios::binary);
+    }
+
+    void reopen_shorter_for_reading(std::streampos pos) {
+        shorterTape->getStream().open(shorterTape->getPath(),std::ios::in|std::ios::binary);
+        shorterTape->getStream().clear();
+        //shorterTape->getStream().seekg(pos);
+    }
+
+
+    std::pair<std::streampos,std::streampos> display_tapes_after_merge() {
+        std::cout<<"\n\nNastąpiło scalenie taśm :\n";
+
+        //shorter
+        std::streampos shorterStoppedHere = shorterTape->display_tape_but_save_position();
+        shorterTape->getStream().open(shorterTape->getPath(),std::ios::in|std::ios::binary);
+        shorterTape->getStream().seekg(shorterStoppedHere);
+
+        //longer
+        std::streampos longerStoppedHere = longerTape->display_tape_but_save_position();
+        longerTape->getStream().seekg(longerStoppedHere);
+
+        //destination
+        std::cout<<"na taśmę destination:\n";
+        destinationTape->display_tape_but_save_position();
+        destinationTape->getStream().seekg(0, std::ios::beg);
+        std::cout<<std::endl;
+
+        //  all of them are now in writing mode
+        return std::pair<std::streampos,std::streampos>(shorterStoppedHere,longerStoppedHere);
+    }
+
+    void swap_roles(Tape* nextShorter) {
+        Tape* savedDestination = destinationTape;
+        destinationTape = shorterTape;
+        shorterTape = nextShorter;
+        longerTape = savedDestination;
+    }
+
+
 
     void run_merging_process(int seriesOnA, int seriesOnB){
         //  obie są fibonacim
-        //  destination juz jest C i na zapis
+        destinationTape = &cTape;
+        shorterTape = (std::min(seriesOnA,seriesOnB))?&aTape:&bTape;
+        longerTape = (shorterTape==&aTape)?&bTape:&aTape;// choose the one that is left
+
         if(FibonacciGenerator::is_fib(std::max(seriesOnA,seriesOnB))){
-            Tape* shorterTape = (std::min(seriesOnA,seriesOnB))?&firstTape:&secondTape;
-            shorterTape = merge(destinationTape);
-            shorterTape.open_for_writing();
-            destinationTape.open_for_reading();
+            for(int stage=0;stage<2;stage++){
+                Tape* nextShorter = merge();
+
+                //std::pair<std::streampos,std::streampos> shorterLongerEndPair = display_tapes_after_merge();
+                swap_roles(nextShorter);
+                reopen_destination_for_writing();
+                reopen_longer_for_reading(0);
+                reopen_shorter_for_reading(0);//shortStoppedHere
+            }
         }else{
             //  trzeba obliczyc ilosc dummy serii
         }
     }
 
-    void merge(){
+    void reset_buffer_sizes() {
+        shorterTape->getBuffer().resize(bufferSize);
+        longerTape->getBuffer().resize(bufferSize);
+        destinationTape->getBuffer().clear();
+    }
+
+
+
+    Tape* merge(){  //  zwraca tasme na ktorej przerwano scalanie
         using namespace std;
         //  read one chunk from these 2 input tapes
-        firstTape.getStream().read(reinterpret_cast<char *>(firstTape.getBuffer().data()), sizeof(Cone) * firstTape.getBuffer().size());
-        secondTape.getStream().read(reinterpret_cast<char *>(secondTape.getBuffer().data()), sizeof(Cone) * secondTape.getBuffer().size());
-
-        firstTape.readsFromTheDisk++;
-        secondTape.readsFromTheDisk++;
-
-        //DEBUG
-        firstTape.display_buffer_content();
-        secondTape.display_buffer_content();
-
+        //shorterTape->getStream().read(reinterpret_cast<char *>(shorterTape->getBuffer().data()), sizeof(Cone) * shorterTape->getBuffer().size());
+        //longerTape->getStream().read(reinterpret_cast<char *>(longerTape->getBuffer().data()), sizeof(Cone) * longerTape->getBuffer().size());
 
         currentIndex = &indexFirst;
-        currentTape = &firstTape;
+        currentTape = shorterTape;
+
+        reset_buffer_sizes();
+
+        if(istnieje_bufor_do_zaladowania()){
+            zaladuj_kolejny_bufor();shorterTape->readsFromTheDisk++;*currentIndex = 0;
+        }
+        zmien_tasme();
+        if(istnieje_bufor_do_zaladowania()){
+            zaladuj_kolejny_bufor();longerTape->readsFromTheDisk++;*currentIndex = 0;
+        }
+        zmien_tasme();
+
+        shorterTape->display_buffer_content();
+        longerTape->display_buffer_content();
+
 
         //  wez po jednym rekordzie z kazdego bufora
         Cone elementOnCurrent = currentTape->getBuffer().at(*currentIndex);
@@ -208,7 +299,7 @@ public:
                 cout<<elementOnCurrent.getVolume()<<"<="<<elementOnOther.getVolume()<<endl;
                 if(elementOnCurrent <= elementOnOther || napotkanoKoniecSerii==1) {
                     //  wstaw mniejszy z dwoch
-                    destinationTape.insert_element_into_tape_buffer(elementOnCurrent);//wpisz
+                    destinationTape->insert_element_into_tape_buffer(elementOnCurrent);//wpisz
 
                     //  obczaj gdzie jest sasiad, cyz w ogole jest ?!?
                     int akcjaPrzedUstawieniemSasiada = status_sasiada();    //  JEST_W_BUFORZE || TRZEBA_ZALADOWAC_BUFOR || KONIEC_TASMY
@@ -239,6 +330,8 @@ public:
                         elementOnOther = elementOnCurrent;
                         elementOnCurrent = zmien_tasme();
                         napotkanoKoniecSerii++;
+
+                        *other_index() -= 1;//chcial wskazywac na nastepna juz serie, a tego nie chcemy
                     }
 
                 }
@@ -261,11 +354,27 @@ public:
                     cout<<"przygotowanie do " <<scalanieSerii + 1<< "serii, elementOnOther = " << elementOnOther.getVolume()<<" ,index = " <<*other_index()<<endl;
                 }
             }else{
-                destinationTape.flush_buffer_to_tape();
+                destinationTape->flush_buffer_to_tape();
                 std::cout<<"natychmiast wychodze " << std::endl;
-                break;
+
+                cofnijWskaznikiTasm();
+
+                //break;
+                return currentTape;//bo po napotkaniu konca, zmienilismy tasme!
             }
         }
+    }
+
+    void cofnijWskaznikiTasm() {
+
+        int maxIndexBuforaCurrent = currentTape->getBuffer().size() - 1;
+        int bajtowDoCofnieciaNaTasmieCurrent = sizeof(Cone) * (maxIndexBuforaCurrent - (*currentIndex));
+        other_tape()->getStream().seekg(-bajtowDoCofnieciaNaTasmieCurrent,std::ios::cur);
+
+
+        int maxIndexBuforaOther = other_tape()->getBuffer().size() - 1;
+        int bajtowDoCofnieciaNaTasmieOther = sizeof(Cone) * (maxIndexBuforaOther - (*other_index()));
+        currentTape->getStream().seekg(-bajtowDoCofnieciaNaTasmieOther,std::ios::cur);
 
 
     }

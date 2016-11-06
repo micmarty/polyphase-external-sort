@@ -117,7 +117,7 @@ public:
 
 
 
-    void distribute(){
+    std::pair<int,int> distribute(){
         // initially: show file size, count how many whole buffers we need to read
         // and how big is the last one(not fully filled)
         int fileSize = inputTape.file_size();
@@ -189,6 +189,7 @@ public:
 
 
         display_statistics();
+        return std::pair<int,int>(seriesOnA,seriesOnB);
     }
 
     void display_statistics() {

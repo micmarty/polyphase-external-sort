@@ -8,6 +8,8 @@
 #define LOAD_FROM_FILE 0
 #define GENERATE_DATA 1
 
+
+Tape* tape;
 int choosen_data_source() {
     std::cout<<"Good morning, sir\n";
     std::cout<<"Choose your input data source: \n\t<k> for keyboard \n\t<f> for file \n\t<g> for auto-generated data\n";
@@ -52,7 +54,7 @@ void load_from_file(ConeGenerator* generator) {
 
 void populate_input_tape(std::string path) {
     ConeGenerator* generator = new ConeGenerator(path.c_str());
-    int wayToPopulateInputTame = choosen_data_source();
+    int wayToPopulateInputTame = GENERATE_DATA;//choosen_data_source();
 
     if(wayToPopulateInputTame == LOAD_DATA_FROM_KEYBOARD_INPUT){
         load_from_keyboard(generator);
@@ -61,8 +63,8 @@ void populate_input_tape(std::string path) {
     }else if(wayToPopulateInputTame == GENERATE_DATA){
         std::cout<<"Now you need, to specify how many of records would you want to generate: ";
         int recordsToGenerate;
-        std::cin >> recordsToGenerate;
-        generator->generate(recordsToGenerate);
+        //std::cin >> recordsToGenerate;
+        generator->generate(13);
     }
     delete generator;
 }
@@ -73,16 +75,18 @@ void display_generated_input_tape(std::string path) {
     delete inputTape;
 }
 
-void run_distribution_and_show_reads_and_writes(int bufferSize,std::string pathToINPUT, std::string pathToA, std::string pathToB) {
+std::pair<int,int> run_distribution_and_show_reads_and_writes(int bufferSize,std::string pathToINPUT, std::string pathToA, std::string pathToB) {
     std::cout<<"\n\n\n--- DISTRIBUTION PHASE ----\n";
 
     Distributor* distributor = new Distributor(bufferSize,pathToINPUT.c_str(),pathToA.c_str(),pathToB.c_str());
-    distributor->distribute();
+    std::pair<int,int> seriesAfterDistribution = distributor->distribute();
     delete(distributor);
+
+    return seriesAfterDistribution;
 }
 
 void display_more_statistics_after_distribution(std::string pathA,std::string pathB) {
-    Tape* tape = new Tape(pathA.c_str(),"A", 1,true);
+    tape = new Tape(pathA.c_str(),"A", 1,true);
 
     std::cout<<"\n\ntaśma A zawiera " << tape->file_size()<< " bajtów"<<std::endl;
     tape->display_tape();
@@ -93,6 +97,14 @@ void display_more_statistics_after_distribution(std::string pathA,std::string pa
     tape->display_tape();
 
     delete tape;
+}
+
+void run_merging(std::string pathC,std::string pathA,std::string pathB, std::pair<int,int> series) {
+    std::cout<<"\n\n\n--- SORTING AND MERGING PHASE ----\n";
+
+    MergingHandler* mergingHandler = new MergingHandler(3,pathC,pathA,pathB);
+    mergingHandler->run_merging_process(series.first,series.second);
+    delete mergingHandler;
 }
 
 int main() {
@@ -108,25 +120,14 @@ int main() {
     display_generated_input_tape(tape_INPUT_path);
 
     int bufferSize = 3;
-    run_distribution_and_show_reads_and_writes(bufferSize,tape_INPUT_path,tape_A_path,tape_B_path);
+    std::pair<int,int> seriesAfterDistribution = run_distribution_and_show_reads_and_writes(bufferSize,tape_INPUT_path,tape_A_path,tape_B_path);
 
     //  DISPLAY A and B AFTER DISTRIBUTION
     display_more_statistics_after_distribution(tape_A_path, tape_B_path);
 
-//
-//
-//    //  SORTING
-//    std::cout<<std::endl<<std::endl<<"--- SORTING AND MERGING PHASE ----"<<std::endl;
-//
-//    //  sorting and merging phase
-//    MergingHandler* mergingHandler = new MergingHandler(3,tape_C_path,tape_A_path,tape_B_path);
-//    mergingHandler->merge();
-//    delete mergingHandler;
-//
-//
-//    tape = new Tape(tape_C_path.c_str(),"C", 1,true);
-//    std::cout<<std::endl<<std::endl;
-//    tape->display_tape();
+    //  SORTING
+    run_merging(tape_C_path,tape_A_path, tape_B_path, seriesAfterDistribution);
+
 
 
 
