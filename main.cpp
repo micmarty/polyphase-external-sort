@@ -54,7 +54,7 @@ void load_from_file(ConeGenerator* generator) {
 
 void populate_input_tape(std::string path) {
     ConeGenerator* generator = new ConeGenerator(path.c_str());
-    int wayToPopulateInputTame = GENERATE_DATA;//choosen_data_source();
+    int wayToPopulateInputTame = choosen_data_source();
 
     if(wayToPopulateInputTame == LOAD_DATA_FROM_KEYBOARD_INPUT){
         load_from_keyboard(generator);
