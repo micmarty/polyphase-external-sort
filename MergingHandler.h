@@ -37,6 +37,8 @@ class MergingHandler {
     int* currentIndex;
     int bufferSize;
 
+    bool pobranoNadmiarowyBufor;
+
 public:
     MergingHandler(int bufferSize_,
                    const std::string& cPath,
@@ -51,6 +53,7 @@ public:
         currentTape = &aTape;
         currentIndex = &indexFirst;
         bufferSize = bufferSize_;
+        pobranoNadmiarowyBufor = false;
     }
 
     ~MergingHandler()
@@ -226,10 +229,15 @@ public:
     }
 
     void swap_roles(Tape* nextShorter) {
+
         Tape* savedDestination = destinationTape;
         destinationTape = shorterTape;
         shorterTape = nextShorter;
         longerTape = savedDestination;
+
+
+
+
     }
 
 
@@ -237,19 +245,30 @@ public:
     void run_merging_process(int seriesOnA, int seriesOnB){
         //  obie są fibonacim
         destinationTape = &cTape;
-        shorterTape = (std::min(seriesOnA,seriesOnB))?&aTape:&bTape;
+        shorterTape = (std::min(seriesOnA,seriesOnB) == seriesOnA)?&aTape:&bTape;
         longerTape = (shorterTape==&aTape)?&bTape:&aTape;// choose the one that is left
 
         if(FibonacciGenerator::is_fib(std::max(seriesOnA,seriesOnB))){
-            for(int stage=0;stage<1;stage++){
+            for(int stage=0;stage<2;stage++){
                 Tape* nextShorter = merge();
+
+
 
                 //std::pair<std::streampos,std::streampos> shorterLongerEndPair = display_tapes_after_merge();
 
                 swap_roles(nextShorter);
                 reopen_destination_for_writing();
                 reopen_longer_for_reading();
+
+
+
                 reopen_shorter_for_reading();//shortStoppedHere
+
+                //DEBUG ladowania serii
+//                currentTape = shorterTape;
+//                zaladuj_kolejny_bufor();
+//                currentTape->display_buffer_content();
+
             }
         }else{
             std::cout<<"nie jest FIBONACIIM TODO"<<std::endl;
@@ -271,6 +290,7 @@ public:
         //shorterTape->getStream().read(reinterpret_cast<char *>(shorterTape->getBuffer().data()), sizeof(Cone) * shorterTape->getBuffer().size());
         //longerTape->getStream().read(reinterpret_cast<char *>(longerTape->getBuffer().data()), sizeof(Cone) * longerTape->getBuffer().size());
 
+        pobranoNadmiarowyBufor = false;
         currentIndex = &indexFirst;
         currentTape = shorterTape;
 
@@ -311,9 +331,16 @@ public:
                         akcjaPrzedUstawieniemSasiada == TRZEBA_ZALADOWAC_BUFOR) {
 
                         // ale jest na nastepnym buforze
-                        if (akcjaPrzedUstawieniemSasiada == TRZEBA_ZALADOWAC_BUFOR)
+                        if (akcjaPrzedUstawieniemSasiada == TRZEBA_ZALADOWAC_BUFOR){
                             //  to pobierz bufor
+                            if(napotkanoKoniecJednejZTasm == true){
+                                pobranoNadmiarowyBufor = true;
+                            }
                             zaladuj_kolejny_bufor();    // i wyzeruj index
+                            cout<<"ZALADOWALEM KOLEJNY BUFOR!:"<<endl;
+                            currentTape->display_buffer_content();
+                        }
+
 
                         //  jesli jest <=, to on staje sie currenetm teraz
                         if (sasiad_nalezy_do_serii(elementOnCurrent)) {
@@ -360,27 +387,41 @@ public:
                 std::cout<<"natychmiast wychodze " << std::endl;
 
                 cofnijWskaznikiTasm();
-
                 //break;
-                return currentTape;//bo po napotkaniu konca, zmienilismy tasme!
+                //tu powinienem zwracac obecnie longer, bo on bedzie w przyszlosci shortem
+                return longerTape;//bo po napotkaniu konca, zmienilismy tasme!
             }
         }
     }
 
     void cofnijWskaznikiTasm() {
+        longerTape->display_buffer_content();
+        shorterTape->display_buffer_content();
 
-        int maxIndexBuforaCurrent = currentTape->getBuffer().size() - 1;
-        int bajtowDoCofnieciaNaTasmieCurrent = sizeof(Cone) * (maxIndexBuforaCurrent - (*currentIndex));
-        other_tape()->getStream().seekg(-bajtowDoCofnieciaNaTasmieCurrent,std::ios::cur);
+        if(pobranoNadmiarowyBufor){
+            //cofnij nadmiarowo zaladowany bufor
+            longerTape->getStream().seekg(-(longerTape->getBuffer().size()*sizeof(Cone)),std::ios::cur);
+//            currentTape = longerTape;
+//            zaladuj_kolejny_bufor();
+//
+//            longerTape->display_buffer_content();
+        }
 
 
-        int maxIndexBuforaOther = other_tape()->getBuffer().size() - 1;
-        int bajtowDoCofnieciaNaTasmieOther = sizeof(Cone) * (maxIndexBuforaOther - (*other_index()));
-        currentTape->getStream().seekg(-bajtowDoCofnieciaNaTasmieOther,std::ios::cur);
-
+//        int maxIndexBuforaCurrent = currentTape->getBuffer().size() - 1;
+//        int bajtowDoCofnieciaNaTasmieCurrent = sizeof(Cone) * (maxIndexBuforaCurrent - (*currentIndex));
+//        other_tape()->getStream().seekg(-bajtowDoCofnieciaNaTasmieCurrent,std::ios::cur);
+//
+//
+//        int maxIndexBuforaOther = other_tape()->getBuffer().size() - 1;
+////        int bajtowDoCofnieciaNaTasmieOther = sizeof(Cone) * (maxIndexBuforaOther - (*other_index()));
+////        currentTape->getStream().seekg(-bajtowDoCofnieciaNaTasmieOther,std::ios::cur);
+//        int bajtowDoCofnieciaNaTasmieOther = sizeof(Cone) * (maxIndexBuforaOther+1);//czyli rozmiar calego bufora sie cofamy
+//        currentTape->getStream().seekg(-32,std::ios::cur);
+//        zaladuj_kolejny_bufor();
+//        currentTape->display_buffer_content();
 
     }
-
 
 
 
