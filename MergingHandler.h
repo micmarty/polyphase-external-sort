@@ -140,7 +140,7 @@ public:
         int neigh_index = (*other_index()) + 1;
 
         //  sasiad lezy jeszcze w obrebie obecnego bufora
-        if(neigh_index < other_tape()->getBuffer().size()){                  std::cout<<"Nie przekroczymy tasmy. Obecny: "<<other_tape()->getBuffer().at(*other_index()).getVolume()<<", sasiad: "<<other_tape()->getBuffer().at(neigh_index).getVolume()<<std::endl;
+        if(neigh_index < other_tape()->getBuffer().size()){                  std::cout<<"Nie przekroczymy tasmy. sasiad: "<<other_tape()->getBuffer().at(neigh_index).getVolume()<<std::endl;
             return JEST_W_BUFORZE;   //  nie przekroczy bo jest w zasiegu bufora
         }
             //  sasiad lezy poza buforem, trzeba zaladowac nowy bufor(pelny, lub pomniejszony - ostatni)
@@ -185,7 +185,7 @@ public:
         }
     }
 
-    void reopen_longer_for_reading(std::streampos pos) {
+    void reopen_longer_for_reading() {
         longerTape->getStream().close();
         longerTape->getStream().open(longerTape->getPath(),std::ios::in|std::ios::binary);
         //longerTape->getStream().seekg(pos);
@@ -196,7 +196,7 @@ public:
         destinationTape->getStream().open(destinationTape->getPath(),std::ios::out|std::ios::binary);
     }
 
-    void reopen_shorter_for_reading(std::streampos pos) {
+    void reopen_shorter_for_reading() {
         shorterTape->getStream().open(shorterTape->getPath(),std::ios::in|std::ios::binary);
         shorterTape->getStream().clear();
         //shorterTape->getStream().seekg(pos);
@@ -241,16 +241,18 @@ public:
         longerTape = (shorterTape==&aTape)?&bTape:&aTape;// choose the one that is left
 
         if(FibonacciGenerator::is_fib(std::max(seriesOnA,seriesOnB))){
-            for(int stage=0;stage<2;stage++){
+            for(int stage=0;stage<1;stage++){
                 Tape* nextShorter = merge();
 
                 //std::pair<std::streampos,std::streampos> shorterLongerEndPair = display_tapes_after_merge();
+
                 swap_roles(nextShorter);
                 reopen_destination_for_writing();
-                reopen_longer_for_reading(0);
-                reopen_shorter_for_reading(0);//shortStoppedHere
+                reopen_longer_for_reading();
+                reopen_shorter_for_reading();//shortStoppedHere
             }
         }else{
+            std::cout<<"nie jest FIBONACIIM TODO"<<std::endl;
             //  trzeba obliczyc ilosc dummy serii
         }
     }
@@ -275,7 +277,7 @@ public:
         reset_buffer_sizes();
 
         if(istnieje_bufor_do_zaladowania()){
-            zaladuj_kolejny_bufor();shorterTape->readsFromTheDisk++;*currentIndex = 0;
+            zaladuj_kolejny_bufor();shorterTape->readsFromTheDisk++;*currentIndex = 0;//liczniki rek usunac!
         }
         zmien_tasme();
         if(istnieje_bufor_do_zaladowania()){
@@ -301,7 +303,7 @@ public:
                     //  wstaw mniejszy z dwoch
                     destinationTape->insert_element_into_tape_buffer(elementOnCurrent);//wpisz
 
-                    //  obczaj gdzie jest sasiad, cyz w ogole jest ?!?
+                    //  gdzie jest sasiad, cyz w ogole jest
                     int akcjaPrzedUstawieniemSasiada = status_sasiada();    //  JEST_W_BUFORZE || TRZEBA_ZALADOWAC_BUFOR || KONIEC_TASMY
 
                     //  jesli sasiad gdzies jest
@@ -330,8 +332,6 @@ public:
                         elementOnOther = elementOnCurrent;
                         elementOnCurrent = zmien_tasme();
                         napotkanoKoniecSerii++;
-
-                        *other_index() -= 1;//chcial wskazywac na nastepna juz serie, a tego nie chcemy
                     }
 
                 }
@@ -346,10 +346,12 @@ public:
             if(!napotkanoKoniecJednejZTasm){
                 //zakonczylismy poprzednia, serie i przesuwamy currenty na elementy z nowej serii
                 if(status_sasiada() != KONIEC_TASMY){
+                    //*currentIndex += 1;
                     elementOnCurrent = currentTape->getBuffer().at(*currentIndex);
                     cout<<endl<<endl<<endl<<"przygotowanie do " <<scalanieSerii + 1<< "serii, elementOnCurrent = " << elementOnCurrent.getVolume()<<" ,index = " <<*currentIndex<<endl;
                 }
                 if(status_sasiada_na_other() != KONIEC_TASMY){
+                    //*other_index() += 1;
                     elementOnOther = other_tape()->getBuffer().at(*other_index());
                     cout<<"przygotowanie do " <<scalanieSerii + 1<< "serii, elementOnOther = " << elementOnOther.getVolume()<<" ,index = " <<*other_index()<<endl;
                 }

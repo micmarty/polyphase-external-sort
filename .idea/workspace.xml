@@ -12,11 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83f63231-5868-40a6-8756-ade6f587f3b8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConeGenerator.h" afterPath="$PROJECT_DIR$/ConeGenerator.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Distributor.h" afterPath="$PROJECT_DIR$/Distributor.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MergingHandler.h" afterPath="$PROJECT_DIR$/MergingHandler.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tape.h" afterPath="$PROJECT_DIR$/Tape.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
     </list>
     <ignored path="polyphase-external-sort.iws" />
@@ -37,22 +34,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MergingHandler.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MergingHandler.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MergingHandler.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="243" column="35" selection-start-line="243" selection-start-column="35" selection-end-line="243" selection-end-column="35" />
+            <state relative-caret-position="323">
+              <caret line="361" column="0" selection-start-line="361" selection-start-column="0" selection-end-line="361" selection-end-column="0" />
               <folding>
                 <element signature="e#140#157#0" expanded="true" />
                 <element signature="e#1096#1126#0" expanded="false" />
                 <element signature="e#2875#3240#0" expanded="false" />
                 <element signature="e#3246#4152#0" expanded="false" />
-                <element signature="e#4158#5091#0" expanded="false" />
-                <element signature="e#5097#5443#0" expanded="false" />
-                <element signature="e#5449#5599#0" expanded="false" />
-                <element signature="e#5819#6064#0" expanded="false" />
-                <element signature="e#6759#7681#0" expanded="false" />
-                <element signature="e#7687#7892#0" expanded="false" />
+                <element signature="e#5025#5371#0" expanded="false" />
+                <element signature="e#5377#5527#0" expanded="false" />
+                <element signature="e#5747#5992#0" expanded="false" />
+                <element signature="e#7579#7784#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-531">
+              <caret line="68" column="21" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConeGenerator.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="434">
+              <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
+              <folding>
+                <element signature="e#138#155#0" expanded="true" />
+                <element signature="e#331#426#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -61,8 +79,8 @@
       <file leaf-file-name="Tape.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tape.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+            <state relative-caret-position="233">
+              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
               <folding>
                 <element signature="e#119#136#0" expanded="true" />
                 <element signature="e#1936#2536#0" expanded="false" />
@@ -74,7 +92,7 @@
       <file leaf-file-name="stl_vector.h" pinned="false" current-in-tab="false">
         <entry file="file:///usr/include/c++/6.2.1/bits/stl_vector.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="692">
+            <state relative-caret-position="243">
               <caret line="803" column="0" selection-start-line="803" selection-start-column="0" selection-end-line="803" selection-end-column="0" />
               <folding />
             </state>
@@ -93,10 +111,10 @@
         <option value="$PROJECT_DIR$/Cone.h" />
         <option value="$PROJECT_DIR$/FibonacciGenerator.h" />
         <option value="$PROJECT_DIR$/Distributor.h" />
-        <option value="$PROJECT_DIR$/main.cpp" />
-        <option value="$PROJECT_DIR$/ConeGenerator.h" />
         <option value="$PROJECT_DIR$/Tape.h" />
         <option value="$PROJECT_DIR$/MergingHandler.h" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/ConeGenerator.h" />
       </list>
     </option>
   </component>
@@ -139,7 +157,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sob5lis14:20" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
@@ -331,12 +349,12 @@
       <workItem from="1478346198703" duration="8691000" />
       <workItem from="1478355136842" duration="23868000" />
       <workItem from="1478386927176" duration="844000" />
-      <workItem from="1478425627850" duration="4854000" />
+      <workItem from="1478425627850" duration="13727000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158429000" />
+    <option name="totallyTimeSpent" value="167302000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="27" width="1859" height="1053" extended-state="6" />
@@ -344,15 +362,15 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22377622" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19491525" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2605932" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36740184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18558365" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3211404" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17428724" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -403,24 +421,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/MergingHandler.h</url>
-          <line>276</line>
-          <option name="timeStamp" value="185" />
+          <line>361</line>
+          <option name="timeStamp" value="209" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="186" />
+      <option name="time" value="210" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
-        <watch expression="shorterTape-&gt;getStream().tellg()" language="ObjectiveC" />
-        <watch expression="shorterTape-&gt;file_size_and_save_position()" language="ObjectiveC" />
-        <watch expression="longerTape-&gt;getStream().tellg()" language="ObjectiveC" />
-        <watch expression="longerTape-&gt;file_size_and_save_position()" language="ObjectiveC" />
-        <watch expression="shorterTape-&gt;getName()" language="ObjectiveC" />
-        <watch expression="longerTape-&gt;getName()" language="ObjectiveC" />
-        <watch expression="longerTape-&gt;getStream().clear()" language="ObjectiveC" />
+        <watch expression="*currentIndex" language="ObjectiveC" />
+        <watch expression="*other_index()" language="ObjectiveC" />
+        <watch expression="elementOnCurrent" />
+        <watch expression="elementOnOther" />
+        <watch expression="*currentIndex" language="ObjectiveC" />
+        <watch expression="*other_index()" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>
@@ -442,12 +459,10 @@
             <element signature="e#1096#1126#0" expanded="false" />
             <element signature="e#2875#3240#0" expanded="false" />
             <element signature="e#3246#4152#0" expanded="false" />
-            <element signature="e#4158#5091#0" expanded="false" />
-            <element signature="e#5097#5443#0" expanded="false" />
-            <element signature="e#5449#5599#0" expanded="false" />
-            <element signature="e#5819#6064#0" expanded="false" />
-            <element signature="e#6759#7681#0" expanded="false" />
-            <element signature="e#7687#7892#0" expanded="false" />
+            <element signature="e#5025#5371#0" expanded="false" />
+            <element signature="e#5377#5527#0" expanded="false" />
+            <element signature="e#5747#5992#0" expanded="false" />
+            <element signature="e#7579#7784#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -515,12 +530,10 @@
             <element signature="e#1096#1126#0" expanded="false" />
             <element signature="e#2875#3240#0" expanded="false" />
             <element signature="e#3246#4152#0" expanded="false" />
-            <element signature="e#4158#5091#0" expanded="false" />
-            <element signature="e#5097#5443#0" expanded="false" />
-            <element signature="e#5449#5599#0" expanded="false" />
-            <element signature="e#5819#6064#0" expanded="false" />
-            <element signature="e#6759#7681#0" expanded="false" />
-            <element signature="e#7687#7892#0" expanded="false" />
+            <element signature="e#5025#5371#0" expanded="false" />
+            <element signature="e#5377#5527#0" expanded="false" />
+            <element signature="e#5747#5992#0" expanded="false" />
+            <element signature="e#7579#7784#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -816,17 +829,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
-          <folding>
-            <element signature="e#138#155#0" expanded="true" />
-            <element signature="e#331#426#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Distributor.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3438">
@@ -845,14 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/6.2.1/bits/postypes.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -861,18 +855,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/6.2.1/bits/stl_vector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="692">
-          <caret line="803" column="0" selection-start-line="803" selection-start-column="0" selection-end-line="803" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tape.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+        <state relative-caret-position="233">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding>
             <element signature="e#119#136#0" expanded="true" />
             <element signature="e#1936#2536#0" expanded="false" />
@@ -880,21 +866,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/include/c++/6.2.1/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="803" column="0" selection-start-line="803" selection-start-column="0" selection-end-line="803" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-531">
+          <caret line="68" column="21" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MergingHandler.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="243" column="35" selection-start-line="243" selection-start-column="35" selection-end-line="243" selection-end-column="35" />
+        <state relative-caret-position="323">
+          <caret line="361" column="0" selection-start-line="361" selection-start-column="0" selection-end-line="361" selection-end-column="0" />
           <folding>
             <element signature="e#140#157#0" expanded="true" />
             <element signature="e#1096#1126#0" expanded="false" />
             <element signature="e#2875#3240#0" expanded="false" />
             <element signature="e#3246#4152#0" expanded="false" />
-            <element signature="e#4158#5091#0" expanded="false" />
-            <element signature="e#5097#5443#0" expanded="false" />
-            <element signature="e#5449#5599#0" expanded="false" />
-            <element signature="e#5819#6064#0" expanded="false" />
-            <element signature="e#6759#7681#0" expanded="false" />
-            <element signature="e#7687#7892#0" expanded="false" />
+            <element signature="e#5025#5371#0" expanded="false" />
+            <element signature="e#5377#5527#0" expanded="false" />
+            <element signature="e#5747#5992#0" expanded="false" />
+            <element signature="e#7579#7784#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConeGenerator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
+          <folding>
+            <element signature="e#138#155#0" expanded="true" />
+            <element signature="e#331#426#0" expanded="false" />
           </folding>
         </state>
       </provider>

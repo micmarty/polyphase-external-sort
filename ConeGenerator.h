@@ -30,12 +30,14 @@ public:
     }
 
     void generate(int amount){
-        srand(time(NULL));
+        //srand(time(NULL));
         std::vector<Cone> cones;
-        float tab[] = {10,8,1,2,2,7,9,2,5,8,9,8,8};
+        //float tab[] = {10,8,1,2,2,7,9,2,5,8,9,8,8};
+        //float tab[] ={5,	8	,6	,7	,2	,7	,8	,5	,3,	3	,10	,4	,7	};
+
         std::cout<< "vector randomly generated:"<<std::endl;
         for (int i = 0; i < amount; i++) {
-            float radius = tab[i];//(std::rand() % 10 + 1);
+            float radius = (std::rand() % 10 + 1);
             float height = (std::rand() % 10 + 1);
 
             cones.push_back(Cone(radius, height));  //TODO replace with height
