@@ -249,7 +249,7 @@ public:
         longerTape = (shorterTape==&aTape)?&bTape:&aTape;// choose the one that is left
 
         if(FibonacciGenerator::is_fib(std::max(seriesOnA,seriesOnB))){
-            for(int stage=0;stage<2;stage++){
+            for(int stage=0;stage<6;stage++){
                 Tape* nextShorter = merge();
 
 

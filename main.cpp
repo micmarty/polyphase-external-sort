@@ -64,7 +64,7 @@ void populate_input_tape(std::string path) {
         std::cout<<"Now you need, to specify how many of records would you want to generate: ";
         int recordsToGenerate;
         //std::cin >> recordsToGenerate;
-        generator->generate(50);
+        generator->generate(45);
     }
     delete generator;
 }

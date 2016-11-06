@@ -33,11 +33,12 @@ public:
         //srand(time(NULL));
         std::vector<Cone> cones;
         //float tab[] = {10,8,1,2,2,7,9,2,5,8,9,8,8};
-        //float tab[] ={5,	8	,6	,7	,2	,7	,8	,5	,3,	3	,10	,4	,7	};
+        float tab[] = {4,	8,	4,	7,	10,	3,	1,	4,	1,	3,	2,	8,	3,	3,	8,	10,	3,	10,	4,	2,	10,	2,	5,	9,	6,	4,	2,	7,	3,	7,	6,	5,	7,	7,	4,	5,	3,	5,	5,	4,	8,	7,	9,	4,	5};
+                //{5,	8	,6	,7	,2	,7	,8	,5	,3,	3	,10	,4	,7	};
 
         std::cout<< "vector randomly generated:"<<std::endl;
         for (int i = 0; i < amount; i++) {
-            float radius = (std::rand() % 10 + 1);
+            float radius = tab[i];//(std::rand() % 10 + 1);
             float height = (std::rand() % 10 + 1);
 
             cones.push_back(Cone(radius, height));  //TODO replace with height
