@@ -249,7 +249,7 @@ public:
         longerTape = (shorterTape==&aTape)?&bTape:&aTape;// choose the one that is left
 
         if(FibonacciGenerator::is_fib(std::max(seriesOnA,seriesOnB))){
-            for(int stage=0;stage<6;stage++){
+            for(int stage=0;stage<=6;stage++){
                 Tape* nextShorter = merge();
 
 
@@ -348,7 +348,10 @@ public:
                         } else {
                             //  jesli nie, to znaczy ze jest poczatkiem nowej serii, wracamy wiec na druga tasme
                             //skoro opuszczamy te tasme to trzeba przywrocic index na nową serię
+
+
                             *currentIndex += 1;
+
                             napotkanoKoniecSerii++;
                             elementOnOther = elementOnCurrent;
                             elementOnCurrent = zmien_tasme();
@@ -398,14 +401,21 @@ public:
         longerTape->display_buffer_content();
         shorterTape->display_buffer_content();
 
-        if(pobranoNadmiarowyBufor){
+        //if(pobranoNadmiarowyBufor){
             //cofnij nadmiarowo zaladowany bufor
-            longerTape->getStream().seekg(-(longerTape->getBuffer().size()*sizeof(Cone)),std::ios::cur);
+        int prawidlowyIndex;
+        if(currentTape == shorterTape)
+            prawidlowyIndex= *other_index();
+        else if(currentTape == longerTape)
+            prawidlowyIndex = *currentIndex;
+
+            int doCofniecia = (longerTape->getBuffer().size()-(prawidlowyIndex));// bo byl przesuniety current na element z nastepnej serii
+            longerTape->getStream().seekg((-doCofniecia)*sizeof(Cone),std::ios::cur);
 //            currentTape = longerTape;
 //            zaladuj_kolejny_bufor();
 //
 //            longerTape->display_buffer_content();
-        }
+        //}
 
 
 //        int maxIndexBuforaCurrent = currentTape->getBuffer().size() - 1;
