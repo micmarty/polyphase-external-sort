@@ -141,6 +141,7 @@ public:
         }
     }
 
+
     int neighbour_status() {
         int neigh_index = (*currentIndex) + 1;
 
@@ -332,7 +333,7 @@ public:
         load_initial_buffers();
 
         Cone elementOnCurrent = currentTape->getBuffer().at(*currentIndex);
-        Cone elementOnOther = currentTape->getBuffer().at(*opposite_index());
+        Cone elementOnOther = opposite_tape()->getBuffer().at(*opposite_index());
 
         bool endOfOneTapeFound = false;
         int seriesMerged = 0;
@@ -409,18 +410,23 @@ public:
                 //tu powinienem zwracac obecnie longer, bo on bedzie w przyszlosci shortem
                 return longerTape;//bo po napotkaniu konca, zmienilismy tasme! wyjdz z petli for
             }else{
-                if(neighbour_status() != KONIEC_TASMY){
+                //if(neighbour_status() != KONIEC_TASMY){
                     if(!(*freshBufferOnCurrent))
                         *currentIndex += 1; //move to the element from the new series
                     elementOnCurrent = currentTape->getBuffer().at(*currentIndex);
                     cout<<endl<<endl<<endl<<"przygotowanie do " <<seriesMerged + 1<< "serii, elementOnCurrent = " << elementOnCurrent.getVolume()<<" ,index = " <<*currentIndex<<endl;
-                }
-                if(neighbour_status() != KONIEC_TASMY){
+                //}else{
+                //    int cosniehalo=0;
+               // }
+                //if(neighbour_status() != KONIEC_TASMY){
                     if(!*opposite_fresh())
                         *opposite_index() += 1; //move to the element from the new series
                     elementOnOther = opposite_tape()->getBuffer().at(*opposite_index());
                     cout<<"przygotowanie do " <<seriesMerged + 1<< "serii, elementOnOther = " << elementOnOther.getVolume()<<" ,index = " <<*opposite_index()<<endl;
-                }
+                //}
+                //else{
+                //    int cosniehalo=0;
+                //}
             }
         }
     }
@@ -429,11 +435,7 @@ public:
         //DEBUG
         //longerTape->display_buffer_content();
         //shorterTape->display_buffer_content();
-        int potrzebowalElementow;
-        if(currentTape == shorterTape)
-            potrzebowalElementow= *opposite_index() + 1;
-        else if(currentTape == longerTape)
-            potrzebowalElementow = *currentIndex + 1;
+        int potrzebowalElementow = indexLonger + 1;
 
         if(freshOnLonger)
             potrzebowalElementow = 0;
