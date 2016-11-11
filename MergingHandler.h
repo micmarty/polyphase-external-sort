@@ -248,14 +248,17 @@ public:
 
 
         if(FibonacciGenerator::is_fib(seriesOnA) && FibonacciGenerator::is_fib(seriesOnB) && seriesOnA != seriesOnB){
-            while(!endOfBothTapesFound){
+            while(true){
                 Tape* nextShorter = merge(dummiesLeft, endOfBothTapesFound);
+                if(endOfBothTapesFound)
+                    break;
 
                 swap_roles(nextShorter);
                 reopen_destination_for_writing();
                 reopen_longer_for_reading();
                 reopen_shorter_for_reading();
             }
+            cout<<"SCALANIE ZAKOŃCZONE. TAŚMA POWINNA BYĆ POSORTOWANA"<<endl;
 
         }else{
             cout<<"NIE FIBONACI"<<endl;
@@ -426,14 +429,16 @@ public:
         //DEBUG
         //longerTape->display_buffer_content();
         //shorterTape->display_buffer_content();
-
-        int prawidlowyIndex;
+        int potrzebowalElementow;
         if(currentTape == shorterTape)
-            prawidlowyIndex= *opposite_index();
+            potrzebowalElementow= *opposite_index() + 1;
         else if(currentTape == longerTape)
-            prawidlowyIndex = *currentIndex;
+            potrzebowalElementow = *currentIndex + 1;
 
-        int doCofniecia = (longerTape->getBuffer().size()-(prawidlowyIndex));// bo byl przesuniety current na element z nastepnej serii
+        if(freshOnLonger)
+            potrzebowalElementow = 0;
+
+        int doCofniecia = (longerTape->getBuffer().size()-(potrzebowalElementow));// bo byl przesuniety current na element z nastepnej serii
         longerTape->getStream().seekg((-doCofniecia)*sizeof(Cone),std::ios::cur);
     }
 
