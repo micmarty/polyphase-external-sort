@@ -12,13 +12,13 @@ class FibonacciGenerator {
     unsigned int fib1;
     unsigned int fib2;
     unsigned int newFib;
-    bool zuzyto;
+    bool secondOne;// 1 >1< 2 3 ...
 public:
     FibonacciGenerator(){
         fib1 = 1;
         fib2 = 1;
         newFib = 1;
-        zuzyto = false;
+        secondOne = false;
     }
 
     unsigned int limit(){
@@ -27,9 +27,9 @@ public:
 
     /*  generate next in sequence, shift fib1 and fib2 to new values    */
     unsigned int next(){
-        if(!zuzyto && fib1 == 1 && fib2 == 1)
-        {
-            zuzyto = true;
+        // quick fix for two 1 at the beginning. I know it's ugly
+        if(!secondOne && fib1 == 1 && fib2 == 1) {
+            secondOne = true;
             return 1;
         }
 
@@ -57,6 +57,13 @@ public:
             return true;
         else
             return false;
+    }
+
+    int nextFibFrom(const int &i) {
+        do{
+            next();
+        }while(newFib <= i);
+        return newFib;
     }
 };
 

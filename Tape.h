@@ -13,35 +13,41 @@
 class Tape {
 
 private:
-    std::string path;
-    std::string name;
+    const std::string path;
+    const std::string name;
     std::vector<Cone> buffer;
     std::fstream stream;
 
-
-
-public:
     int bufferSize;
     int readsFromTheDisk;
     int writesToTheDisk;
+public:
+    const int originalBufferSize;   //copy of buffer size that never changes!
+    /* use fstream as writing stream */
+    Tape(const std::string& path_,const std::string& name_,int bufferSize_) :
+            path(path_),
+            name(name_),
+            stream(path_,std::ios::out | std::ios::binary),//open for writing
+            buffer(),
+            originalBufferSize(bufferSize_){
 
-    Tape(const std::string& path_,const std::string& name_,int bufferSize_) : stream(path_,std::ios::out | std::ios::binary),buffer(){
-        //open for writing
-        name = name_;
-        path = path_;
-        bufferSize= bufferSize_;
-        buffer.reserve(bufferSize_);
+        bufferSize = originalBufferSize;
+        buffer.reserve(originalBufferSize);
 
         readsFromTheDisk = 0;
         writesToTheDisk = 0;
     }
 
-    Tape(const std::string& path_,const std::string& name_,int bufferSize_, bool readMode) : stream(path_,std::ios::in | std::ios::binary),buffer(){
-        //open for reading
-        name = name_;
-        path = path_;
-        bufferSize = bufferSize_;
-        buffer.resize(bufferSize_);
+    /* use fstream as reading stream */
+    Tape(const std::string& path_,const std::string& name_,int bufferSize_, bool readMode) :
+            path(path_),
+            name(name_),
+            stream(path_,std::ios::in | std::ios::binary), //open for reading
+            buffer(),
+            originalBufferSize(bufferSize_){
+
+        bufferSize = originalBufferSize;
+        buffer.resize(originalBufferSize);
 
         readsFromTheDisk = 0;
         writesToTheDisk = 0;
@@ -50,20 +56,33 @@ public:
     Tape(Tape&);
     void operator= (Tape&);
 
-    ~Tape(){stream.close();};
+    ~Tape(){
+        stream.close();
+    };
 
+    //getters
     std::vector<Cone>& getBuffer(){
         return buffer;
     }
     std::fstream& getStream(){
         return stream;
     }
-    std::string getName(){
+    std::string getName() const {
         return name;
     }
-    std::string getPath(){
+    std::string getPath() const {
         return path;
     }
+    int getBufferSize() const {
+        return bufferSize;
+    }
+    int getReadsFromTheDisk() const {
+        return readsFromTheDisk;
+    }
+    int getWritesToTheDisk() const {
+        return writesToTheDisk;
+    }
+
     void display_buffer_content() {
         for(Cone c: buffer){
             std::cout<< c.getVolume() <<"\t";
@@ -80,23 +99,18 @@ public:
     void flush_buffer_to_tape() {
         std::cout<<"~  czyszczenie resztek w buforze "<<name<<", zrzucam na tasme: ";
         display_buffer_content();
-
         persist_buffer();
-
         buffer.clear();
     }
 
     void insert_element_into_tape_buffer(Cone cone) {
         //  TODO simplify statement
-        if(buffer.size() < bufferSize) //   push to buffer
+        if(buffer.size() < bufferSize)       // push to the buffer
             buffer.push_back(cone);
-        else if(buffer.size() == bufferSize){// persist buffer
+        else if(buffer.size() == bufferSize){// persist buffer onto tape, then push cone into empty buffer
             std::cout<<"~  bufor "<<name<<" sie wypelnil, zrzucam na tasme: ";
             display_buffer_content();
-            std::cout<<std::endl;
-
             persist_buffer();
-
             buffer.clear();
             buffer.push_back(cone);
         }
@@ -104,37 +118,34 @@ public:
     }
 
 
-
-
     void persist_buffer(){
         stream.write(reinterpret_cast<const char*>(buffer.data()), buffer.size() * sizeof(Cone));
         writesToTheDisk++;
     }
 
-    //  put given vector onto the tape
+    //  put given vector onto the tape(called from ConeGenerator)
     void persist_vector(std::vector<Cone>& v){
         stream.write(reinterpret_cast<const char*>(v.data()), v.size() * sizeof(Cone));
-
     }
 
     //  display one by one :(
     void display_tape(){
         int elementsCounter = 0;
 
+        std::vector<Cone> tmpBuffer(1);
         std::cout<<"zawartość taśmy " + name << std::endl;
-        while (stream.read(reinterpret_cast<char *>(buffer.data()), sizeof(Cone) * 1)){
-            std::cout << buffer.at(0).getVolume() << "\t";
+        while (stream.read(reinterpret_cast<char *>(tmpBuffer.data()), sizeof(Cone) * 1)){
+            std::cout << tmpBuffer.at(0).getVolume() << "\t";
             elementsCounter++;
         }
         std::cout<<std::endl<<"posiada "<<elementsCounter<<" elementow"<<std::endl;
     }
 
+    //only use if you've end up working with current stream and want switch to different mode
     std::streampos display_tape_but_save_position() {
         std::streampos savedPosition = stream.tellg();
 
-        //  reset all no matter what
         stream.clear();
-        //stream.close();
         stream.open(path,std::ios::in|std::ios::binary);
 
         //  the reading and displaying part
@@ -173,7 +184,7 @@ public:
         return end - begin;             //  return file size in bytes
     }
 
-    size_t file_size_and_save_position() {
+    std::streamsize file_size_and_save_position() {
         std::streampos currentPosition = stream.tellg();
         stream.seekg( 0, std::ios::end );
 
@@ -189,6 +200,18 @@ public:
     }
 
 
+    void setBufferSize(int newSize) {
+        bufferSize = newSize;
+    }
+
+    void incrementReadCounter() {
+        readsFromTheDisk++;
+    }
+
+    void resizeBuffer(int newSize) {
+        setBufferSize(newSize);
+        buffer.resize(newSize);
+    }
 };
 
 

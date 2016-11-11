@@ -133,7 +133,7 @@ public:
             LAST_READ:  //  label used only once in last run(smaller chunk at the end of the input file)
 
             inputTape.getStream().read(reinterpret_cast<char *>(readBuffer.data()), sizeof(Cone) * bufferSize);
-            inputTape.readsFromTheDisk++;
+            inputTape.incrementReadCounter();
 
             for(int readBufferIndex = 0; readBufferIndex<bufferSize;readBufferIndex++){
                 do{
@@ -195,9 +195,9 @@ public:
     void display_statistics() {
         std::cout<<"PO DYSTRYBUCJI NA A jest: "<<seriesOnA<<" serii\n";
         std::cout<<"PO DYSTRYBUCJI NA B jest: "<<seriesOnB<<" serii\n\n";
-        std::cout<<"ODCZYTY Z TAŚMY INPUT: "<<inputTape.readsFromTheDisk << "\n"
-                 <<"ZAPISY NA TAŚMĘ A:     " << aTape.writesToTheDisk<<"\n"
-                 <<"ZAPISY NA TAŚMĘ B:     "<<bTape.writesToTheDisk<<"\n\n";
+        std::cout<<"ODCZYTY Z TAŚMY INPUT: "<<inputTape.getReadsFromTheDisk() << "\n"
+                 <<"ZAPISY NA TAŚMĘ A:     " << aTape.getWritesToTheDisk()<<"\n"
+                 <<"ZAPISY NA TAŚMĘ B:     "<<bTape.getWritesToTheDisk()<<"\n\n";
     }
 
 

@@ -52,9 +52,9 @@ void load_from_file(ConeGenerator* generator) {
     }
 }
 
-void populate_input_tape(std::string path) {
-    ConeGenerator* generator = new ConeGenerator(path.c_str());
-    int wayToPopulateInputTame = choosen_data_source();
+void populate_input_tape(std::string path, int recordsToGenerate, int bufferSize) {
+    ConeGenerator* generator = new ConeGenerator(path.c_str(), bufferSize);
+    int wayToPopulateInputTame = GENERATE_DATA;//choosen_data_source();
 
     if(wayToPopulateInputTame == LOAD_DATA_FROM_KEYBOARD_INPUT){
         load_from_keyboard(generator);
@@ -62,9 +62,8 @@ void populate_input_tape(std::string path) {
         load_from_file(generator);
     }else if(wayToPopulateInputTame == GENERATE_DATA){
         std::cout<<"Now you need, to specify how many of records would you want to generate: ";
-        int recordsToGenerate;
         //std::cin >> recordsToGenerate;
-        generator->generate(45);
+        generator->generate(recordsToGenerate);
     }
     delete generator;
 }
@@ -99,34 +98,34 @@ void display_more_statistics_after_distribution(std::string pathA,std::string pa
     delete tape;
 }
 
-void run_merging(std::string pathC,std::string pathA,std::string pathB, std::pair<int,int> series) {
+void run_merging(std::string pathC,std::string pathA,std::string pathB, std::pair<int,int> series, int bufferSize) {
     std::cout<<"\n\n\n--- SORTING AND MERGING PHASE ----\n";
-
-    MergingHandler* mergingHandler = new MergingHandler(3,pathC,pathA,pathB);
+    MergingHandler* mergingHandler = new MergingHandler(bufferSize,pathC,pathA,pathB);
     mergingHandler->run_merging_process(series.first,series.second);
     delete mergingHandler;
 }
 
 int main() {
-    std::string projectPath = "/home/miczi/ClionProjects/polyphase-external-sort-edu/";
+    std::string projectPath = "/home/miczi/ClionProjects/polyphase-external-sort/";
     std::string tape_INPUT_path = projectPath + "INPUT";
     std::string tape_A_path = projectPath + "A";
     std::string tape_B_path = projectPath + "B";
     std::string tape_C_path = projectPath + "C";
 
+    int bufferSize = 5;
+    int recordsToGenerate = 50;
 
-
-    populate_input_tape(tape_INPUT_path);
+    populate_input_tape(tape_INPUT_path, recordsToGenerate, bufferSize);
     display_generated_input_tape(tape_INPUT_path);
 
-    int bufferSize = 3;
+    //remember series number on both tapes
     std::pair<int,int> seriesAfterDistribution = run_distribution_and_show_reads_and_writes(bufferSize,tape_INPUT_path,tape_A_path,tape_B_path);
 
     //  DISPLAY A and B AFTER DISTRIBUTION
     display_more_statistics_after_distribution(tape_A_path, tape_B_path);
 
     //  SORTING
-    run_merging(tape_C_path,tape_A_path, tape_B_path, seriesAfterDistribution);
+    run_merging(tape_C_path,tape_A_path, tape_B_path, seriesAfterDistribution, bufferSize);
 
 
 
