@@ -4,9 +4,11 @@
 
 #ifndef POLYPHASE_EXTERNAL_SORT_CONE_H
 #define POLYPHASE_EXTERNAL_SORT_CONE_H
-
-
 #include <lcms.h>
+
+
+//MODIFY FLAG BELOW!!!!!!!!!!
+#define DEBUG 0
 
 class Cone {
     float radius;
@@ -14,8 +16,11 @@ class Cone {
 
 public:
     float getVolume() const{
+#if DEBUG == 0
         return M_PI * radius * radius * height / 3.0;
-        //return radius; //DEBUG
+#elif DEBUG == 1
+        return radius;
+#endif
     }
 
     Cone() {
@@ -26,8 +31,8 @@ public:
         this->radius = radius;
         this->height = height;
     }
-
-    //  operators overloading for comparisons
+#if DEBUG == 0
+//  ORYGINALNE
     bool operator> (const Cone &right)const
     {
         return (getVolume() > right.getVolume() );
@@ -40,18 +45,43 @@ public:
     {
         return (getVolume()  >= right.getVolume() );
     }
-
     bool operator== (const Cone &right) const
     {
         return (getVolume() == right.getVolume());
     }
-
-
-
     bool operator<= (const Cone &right)const
     {
         return (getVolume() <= right.getVolume());
     }
+#else
+    //  UPROSZCZONEEEEEEEEEEEEEEEE
+    bool operator> (const Cone &right)const
+    {
+        return (radius > right.radius );
+    }
+    bool operator< (const Cone &right)const
+    {
+        return (radius  < right.radius );
+    }
+    bool operator>= (const Cone &right) const
+    {
+        return (radius  >= right.radius );
+    }
+    bool operator== (const Cone &right) const
+    {
+        return (radius == right.radius);
+    }
+    bool operator<= (const Cone &right)const
+    {
+        return (radius <= right.radius);
+    }
+#endif
+
+
+
+
+
+
 };
 
 

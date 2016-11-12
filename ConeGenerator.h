@@ -110,8 +110,9 @@ public:
 
         std::cout<< "vector imported from file or keyboard"<<std::endl;
         for(int i=0;i<amount;i++){
-            cones.push_back(Cone(radiuses[i], 0));   //TODO replace 0 with heights[i]
-            std::cout << cones[i].getVolume() << "\t";
+            Cone cone = Cone(radiuses[i], heights[i]);
+            cones.push_back(cone);
+            std::cout << cone.getVolume() << "\t";
 
             if(i % bufferSize == 0){
                 tapeToFill->persist_vector(cones);

@@ -54,7 +54,7 @@ void load_from_file(ConeGenerator* generator) {
 
 void populate_input_tape(std::string path, int recordsToGenerate, int bufferSize) {
     ConeGenerator* generator = new ConeGenerator(path.c_str(), bufferSize);
-    int wayToPopulateInputTame = GENERATE_DATA;//choosen_data_source();
+    int wayToPopulateInputTame = choosen_data_source();
 
     if(wayToPopulateInputTame == LOAD_DATA_FROM_KEYBOARD_INPUT){
         load_from_keyboard(generator);
@@ -62,7 +62,7 @@ void populate_input_tape(std::string path, int recordsToGenerate, int bufferSize
         load_from_file(generator);
     }else if(wayToPopulateInputTame == GENERATE_DATA){
         std::cout<<"Now you need, to specify how many of records would you want to generate: ";
-        //std::cin >> recordsToGenerate;
+        std::cin >> recordsToGenerate;
         generator->generate(recordsToGenerate);
     }
     delete generator;
