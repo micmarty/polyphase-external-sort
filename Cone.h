@@ -6,14 +6,16 @@
 #define POLYPHASE_EXTERNAL_SORT_CONE_H
 
 
+#include <lcms.h>
+
 class Cone {
     float radius;
     float height;
 
 public:
-    float getVolume(){
-        //return M_PI * radius * radius * height / 3.0;
-        return radius; //DEBUG
+    float getVolume() const{
+        return M_PI * radius * radius * height / 3.0;
+        //return radius; //DEBUG
     }
 
     Cone() {
@@ -28,27 +30,27 @@ public:
     //  operators overloading for comparisons
     bool operator> (const Cone &right)const
     {
-        return (radius > right.radius);
+        return (getVolume() > right.getVolume() );
     }
     bool operator< (const Cone &right)const
     {
-        return (radius < right.radius);
+        return (getVolume()  < right.getVolume() );
     }
     bool operator>= (const Cone &right) const
     {
-        return (radius >= right.radius);
+        return (getVolume()  >= right.getVolume() );
     }
 
     bool operator== (const Cone &right) const
     {
-        return (radius == right.radius);
+        return (getVolume() == right.getVolume());
     }
 
 
 
     bool operator<= (const Cone &right)const
     {
-        return (radius <= right.radius);
+        return (getVolume() <= right.getVolume());
     }
 };
 

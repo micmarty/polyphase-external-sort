@@ -173,7 +173,7 @@ public:
 
 
         //  process last, a non-fully filled buffer
-        if(recordsInLastBuffer>0){
+        if(recordsInLastBuffer > 0){
             bufferSize = recordsInLastBuffer;   //  set the new chunk size for reading
             recordsInLastBuffer=-1;             //  just as a flag
             goto LAST_READ;
