@@ -21,7 +21,9 @@
 #define JEST_W_BUFORZE 0
 #define TRZEBA_ZALADOWAC_BUFOR 1
 #define KONIEC_TASMY -1
-#define END_OF_DUMMIES -1
+
+#define GET_LAST -1
+#define END_OF_DUMMIES -2
 
 #define A 1
 #define B 2
@@ -263,24 +265,32 @@ public:
 
         }else{
             cout<<"NIE FIBONACI"<<endl;
-//            FibonacciGenerator generator = FibonacciGenerator();
-//            int dummiesLeft;
-//
-//            if(seriesOnA==seriesOnB || FibonacciGenerator::is_fib(seriesOnA)){
-//                dummiesLeft = generator.nextFibFrom(seriesOnA) - seriesOnB;
-//            }else{
-//                dummiesLeft = generator.nextFibFrom(seriesOnB) - seriesOnA;
-//            }
-//
-//            Tape* nextShorter = merge(dummiesLeft);
-//            for(int stage=2;stage<=(1.45*log2(seriesOnA+seriesOnB));stage++){
-//                Tape* nextShorter = merge(0);
-//
-//                swap_roles(nextShorter);
-//                reopen_destination_for_writing();
-//                reopen_longer_for_reading();
-//                reopen_shorter_for_reading();
-//            }
+            FibonacciGenerator generator = FibonacciGenerator();
+
+            if(seriesOnA==seriesOnB || FibonacciGenerator::is_fib(seriesOnA)){
+                dummiesLeft = generator.nextFibFrom(seriesOnA) - seriesOnB;
+                shorterTape = &aTape;
+                longerTape = &bTape;
+            }else{
+                dummiesLeft = generator.nextFibFrom(seriesOnB) - seriesOnA;
+                //TODO maybe something here
+                shorterTape = &bTape;
+                longerTape = &aTape;
+            }
+
+
+
+
+            while(true) {
+                Tape *nextShorter = merge(dummiesLeft, endOfBothTapesFound);
+                if (endOfBothTapesFound)
+                    break;
+                swap_roles(nextShorter);
+                reopen_destination_for_writing();
+                reopen_longer_for_reading();
+                reopen_shorter_for_reading();
+            }
+            cout<<"SCALANIE ZAKOŃCZONE. TAŚMA POWINNA BYĆ POSORTOWANA"<<endl;
         }
     }
 
@@ -323,7 +333,11 @@ public:
             dummiesLeft--;
         }else if(dummiesLeft == 0){
             cout<<"Serie dummy już się skończyły, rusza normalne scalanie z obu taśm\n";
+            dummiesLeft = GET_LAST;
+            forceRewritingSeries = false;
+        }else if(dummiesLeft == GET_LAST){
             dummiesLeft = END_OF_DUMMIES;//special flag to display above message only once
+            forceRewritingSeries = false;
         }
     }
 
@@ -376,13 +390,17 @@ public:
                             endOfSeriesFoundCounter++;
                             //TODO something with dummies
 
+
+                            reactToDummies(dummiesLeft,forceRewritingSeries,endOfSeriesFoundCounter);
                             //swap elements if we're out of dummies
                             if(dummiesLeft == END_OF_DUMMIES){
                                 elementOnOther = elementOnCurrent;
                                 elementOnCurrent = change_tape();
                             }else{
                                 elementOnCurrent = neighbour_of_current();
+                                endOfSeriesFoundCounter = 0;
                             }
+
                         }
                     }else if(actionBeforeChangingToNeighbour == KONIEC_TASMY){
                         if(endOfOneTapeFound){ //we achieved end of both tapes, so we've merged 1 series and 1 series, then exit

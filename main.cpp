@@ -113,7 +113,7 @@ int main() {
     std::string tape_C_path = projectPath + "C";
 
     int bufferSize = 5;
-    int recordsToGenerate = 50;
+    int recordsToGenerate = 2000;
 
     populate_input_tape(tape_INPUT_path, recordsToGenerate, bufferSize);
     display_generated_input_tape(tape_INPUT_path);
