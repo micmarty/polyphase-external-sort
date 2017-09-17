@@ -106,7 +106,7 @@ void run_merging(std::string pathC,std::string pathA,std::string pathB, std::pai
 }
 
 int main() {
-    std::string projectPath = "/home/miczi/ClionProjects/polyphase-external-sort/";
+    std::string projectPath = "";    
     std::string tape_INPUT_path = projectPath + "INPUT";
     std::string tape_A_path = projectPath + "A";
     std::string tape_B_path = projectPath + "B";

@@ -4,8 +4,7 @@
 
 #ifndef POLYPHASE_EXTERNAL_SORT_CONE_H
 #define POLYPHASE_EXTERNAL_SORT_CONE_H
-#include <lcms.h>
-
+#define M_PI 3.14159265358979323846
 
 //MODIFY FLAG BELOW!!!!!!!!!!
 #define DEBUG 0
