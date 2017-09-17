@@ -21,6 +21,9 @@ g++ build/*.o -o build/PolyphaseSort.out
 ```
 
 ## How it works
+It is sorting cones by volume ```V = (pi* r^2 * H) /3```
+But i did some simplification when you put values manually from the keyboard (it takes/requires only one number instead of **r** and **H**)
+
 It just sorts but not in the memory (RAM) like quicksort or bubblesort. 
 What it does instead is it uses disk files and assumes that these files may be HUGE (like gigabytes) so that the data can't be put into memory in single chunk.
 The whole concept relies on distributing chunks into multiple tapes (a'la Fibonacci sequence), merging and repeating this process until sorted - dramatic simplification.
